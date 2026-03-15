@@ -1,0 +1,27 @@
+# Файлы с данными
+*.csv
+*.xlsx
+*.xls
+
+# Папки с данными
+data/
+results/
+__pycache__/
+
+# Логи
+*.log
+
+# Временные файлы
+*.pyc
+*.pyo
+*.pyd
+*.so
+*.dll
+*.dylib
+
+# Настройки редакторов
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
