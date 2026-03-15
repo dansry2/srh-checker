@@ -10,7 +10,6 @@ def check_data_availability(start_date, end_date, start_hour=0, end_hour=10, out
     if isinstance(current, datetime.datetime):
         current = current.date()
     end = end_date.date() if isinstance(end_date, datetime.datetime) else end_date
-    #fvbvkhdbvld
     dates = []
     while current <= end:
         dates.append(current)
