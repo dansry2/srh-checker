@@ -92,7 +92,7 @@ class AvailabilityChecker(DataChecker):
         super().__init__("availability")
         self.start_hour = start_hour
         self.end_hour = end_hour
-        self.gratings = ['SRH0612', 'SRH1224', 'SRH0306']
+        self.gratings = ['SRH0306', 'SRH0612', 'SRH1224']
     
     def check_day(self, date: datetime.date) -> CheckResult:
         t1 = datetime.datetime.combine(date, datetime.time(self.start_hour, 0, 0))
@@ -135,14 +135,16 @@ class AvailabilityChecker(DataChecker):
 
 class QualityChecker(DataChecker):
     
-    def __init__(self, 
-                 start_hour: int = 1, 
-                 end_hour: int = 9,
-                 n_segments: int = 8,
-                 valley_depth_threshold: float = 15,
-                 slope_threshold: float = 0.01,
-                 trend_significance: float = 0.05):
-        super().__init__("quality")
+    def __init__(
+        self, 
+        start_hour: int = 1, 
+        end_hour: int = 9,
+        n_segments: int = 8,
+        valley_depth_threshold: float = 15,
+        slope_threshold: float = 0.01,
+        trend_significance: float = 0.05
+    ):
+        super().__init__("analysis")
         self.start_hour = start_hour
         self.end_hour = end_hour
         self.n_segments = n_segments
@@ -232,7 +234,7 @@ class QualityChecker(DataChecker):
             corr = srhcp.SRHCorrPlot(date, array, frequency, "corrplot_cache")
             
             if corr.data is None:
-                return {"status": DataStatus.NO_DATA, "comment": "Нет данных в FITS файле"}
+                return {"state": DataStatus.NO_DATA.value, "comment": "Нет данных в FITS файле"}
             
             time_indices = [
                 i for i, t in enumerate(corr.times) 
@@ -241,7 +243,7 @@ class QualityChecker(DataChecker):
             
             if len(time_indices) < 50:
                 return {
-                    "status": DataStatus.NO_DATA,
+                    "state": DataStatus.NO_DATA.value,
                     "comment": f"Маловато точек: {len(time_indices)}",
                     "n_points": len(time_indices)
                 }
@@ -252,7 +254,7 @@ class QualityChecker(DataChecker):
             
             if np.max(flux_I) > 1e6:
                 return {
-                    "status": DataStatus.BAD,
+                    "state": DataStatus.BAD.value,
                     "comment": f"Аномальные выбросы: max={np.max(flux_I):.1e}"
                 }
             
@@ -260,58 +262,83 @@ class QualityChecker(DataChecker):
             
             if analysis["is_problem"]:
                 return {
-                    "status": DataStatus.PROBLEM,
-                    "comment": f"Проблема: {', '.join(analysis['problem_reasons'])}",
-                    **analysis
+                    "state": DataStatus.PROBLEM.value,
+                    "comment": f"Проблемный тренд: {', '.join(analysis['problem_reasons'])}",
+                    "frequency": frequency,
+                    "n_points": analysis["n_points"],
+                    "time_range": f"{times[0].strftime('%H:%M')}-{times[-1].strftime('%H:%M')}",
+                    "flux_I_median": analysis["flux_median"],
+                    "flux_I_std": analysis["flux_std"],
+                    "trend_slope": analysis["slope"],
+                    "trend_direction": analysis["direction"],
+                    "has_valley": analysis["has_valley"]
                 }
             
             return {
-                "status": DataStatus.GOOD,
-                "comment": f"Норма, flux={analysis['flux_median']:.1f} SFU",
-                **analysis
+                "state": DataStatus.GOOD.value,
+                "comment": f"flux_I={analysis['flux_median']:.1f} SFU, стабильный",
+                "frequency": frequency,
+                "n_points": analysis["n_points"],
+                "time_range": f"{times[0].strftime('%H:%M')}-{times[-1].strftime('%H:%M')}",
+                "flux_I_median": analysis["flux_median"],
+                "flux_I_std": analysis["flux_std"],
+                "trend_slope": analysis["slope"],
+                "trend_direction": analysis["direction"],
+                "has_valley": analysis["has_valley"]
             }
             
         except Exception as e:
-            return {"status": DataStatus.NO_DATA, "comment": f"Ошибка: {str(e)}"}
+            return {"state": DataStatus.NO_DATA.value, "comment": f"Ошибка: {str(e)}"}
     
     def check_day(self, date: datetime.date) -> CheckResult:
-        gratings = ['SRH0612', 'SRH1224', 'SRH0306']
+        gratings = ['SRH0306', 'SRH0612', 'SRH1224']
         
-        try:
-            test_corr = srhcp.SRHCorrPlot(date, gratings[0], 6000, "corrplot_cache")
-            if test_corr.data is not None and hasattr(test_corr, 'frequencies'):
-                all_frequencies = sorted(test_corr.frequencies.tolist())
-            else:
-                all_frequencies = [3000, 4000, 5000, 6000, 7000, 8000]
-        except:
-            all_frequencies = [3000, 4000, 5000, 6000, 7000, 8000]
+        grating_frequencies = {}
+        all_freqs = set()
+        
+        for grating in gratings:
+            try:
+                test_corr = srhcp.SRHCorrPlot(date, grating, None, "corrplot_cache")
+                if test_corr.data is not None and hasattr(test_corr, 'frequencies'):
+                    freqs = sorted(test_corr.frequencies.tolist())
+                    grating_frequencies[grating] = freqs
+                    all_freqs.update(freqs)
+            except:
+                if grating == 'SRH0306':
+                    freqs = [2800, 3000, 3200, 3400, 3600, 3800, 4000, 4200, 4400, 4600, 4800, 5000, 5200, 5400, 5600, 5800]
+                elif grating == 'SRH0612':
+                    freqs = [6000, 6400, 6800, 7200, 7600, 8000, 8400, 8800, 9200, 9600, 10000, 10400, 10800, 11200, 11600, 12000]
+                elif grating == 'SRH1224':
+                    freqs = [12200, 12960, 13720, 14480, 15240, 16000, 16760, 17520, 18280, 19040, 19800, 20560, 21320, 22080, 23000, 23400]
+                grating_frequencies[grating] = freqs
+                all_freqs.update(freqs)
         
         results = {}
         overall_status = DataStatus.GOOD
         
         for grating in gratings:
             results[grating] = {}
-            for freq in all_frequencies:
+            freqs = grating_frequencies.get(grating, [])
+            for freq in freqs:
                 freq_result = self._check_frequency(date, grating, freq)
-                results[grating][freq] = freq_result
+                results[grating][str(freq)] = freq_result
                 
-                if freq_result["status"] in [DataStatus.BAD, DataStatus.PROBLEM]:
+                if freq_result.get("state") in [DataStatus.BAD.value, DataStatus.PROBLEM.value]:
                     if overall_status == DataStatus.GOOD:
-                        overall_status = freq_result["status"]
+                        overall_status = DataStatus(freq_result["state"])
         
         details = {
-            "gratings": results,
-            "frequencies": all_frequencies,
-            "n_frequencies": len(all_frequencies)
+            "analysis": results
         }
         
         problem_count = sum(
             1 for g in results 
             for f in results[g] 
-            if results[g][f]["status"] in [DataStatus.PROBLEM, DataStatus.BAD]
+            if results[g][f].get("state") in [DataStatus.PROBLEM.value, DataStatus.BAD.value]
         )
         
-        comment = f"Проверено {len(all_frequencies)} частот, {problem_count} проблем"
+        total_freqs = sum(len(freqs) for freqs in grating_frequencies.values())
+        comment = f"Проверено {total_freqs} частот, {problem_count} проблем"
         
         return CheckResult(
             date=date,
@@ -324,12 +351,16 @@ class QualityChecker(DataChecker):
 
 class DataQualityManager:
     
-    def __init__(self):
+    def __init__(self, output_dir: str = "data_quality"):
         self.checkers: Dict[str, DataChecker] = {}
         self.results: Dict[datetime.date, Dict[str, CheckResult]] = {}
+        self.output_dir = output_dir
+        
+        if not os.path.exists(output_dir):
+            os.makedirs(output_dir)
+            print(f"Создана папка: {output_dir}")
     
     def add_checker(self, checker: DataChecker):
-
         self.checkers[checker.name] = checker
     
     def check_period(self, start_date: datetime.date, end_date: datetime.date):
@@ -354,35 +385,71 @@ class DataQualityManager:
                 
                 print(f"{result.date}: {status_icon} {result.status.value} - {result.comment}")
     
-    def save_to_json(self, filename: str = "data_quality.json"):
-        data = {}
+    def save_to_files(self):
+        saved_count = 0
+        
         for date, date_results in self.results.items():
-            data[date.isoformat()] = {
-                checker_name: result.to_dict()  
-                for checker_name, result in date_results.items()
-            }
+            day_dict = {"date": date.isoformat()}
+            
+            for checker_name, result in date_results.items():
+                result_dict = result.to_dict()
+                if checker_name == "availability":
+                    day_dict["availability"] = result_dict["details"].get("availability", {})
+                elif checker_name == "analysis":
+                    day_dict["analysis"] = result_dict["details"].get("analysis", {})
+            
+            ordered_day = {"date": day_dict["date"]}
+            if "availability" in day_dict:
+                ordered_day["availability"] = day_dict["availability"]
+            if "analysis" in day_dict:
+                ordered_day["analysis"] = day_dict["analysis"]
+            
+            filename = os.path.join(self.output_dir, f"{date.isoformat()}.json")
+            with open(filename, 'w', encoding='utf-8') as f:
+                json.dump(ordered_day, f, ensure_ascii=False, indent=2)
+            
+            saved_count += 1
         
-        with open(filename, 'w', encoding='utf-8') as f:
-            json.dump(data, f, ensure_ascii=False, indent=2)
-        
-        print(f"\n✅ Результаты сохранены в {filename}")
+        print(f"\n Сохранено {saved_count} файлов в папку '{self.output_dir}'")
     
-    def load_from_json(self, filename: str = "data_quality.json"):
-        if not os.path.exists(filename):
-            print(f"Файл {filename} не найден")
+    def load_from_files(self):
+
+        if not os.path.exists(self.output_dir):
+            print(f"Папка {self.output_dir} не найдена")
             return
         
-        with open(filename, 'r', encoding='utf-8') as f:
-            data = json.load(f)
-        
         self.results = {}
-        for date_str, checkers_data in data.items():
-            date = datetime.date.fromisoformat(date_str)
-            self.results[date] = {}
-            for checker_name, result_data in checkers_data.items():
-                self.results[date][checker_name] = CheckResult.from_dict(result_data)
+        loaded_count = 0
         
-        print(f"✅ Загружено {len(self.results)} дней из {filename}")
+        for filename in os.listdir(self.output_dir):
+            if filename.endswith('.json'):
+                filepath = os.path.join(self.output_dir, filename)
+                
+                with open(filepath, 'r', encoding='utf-8') as f:
+                    day_data = json.load(f)
+                
+                date = datetime.date.fromisoformat(day_data["date"])
+                self.results[date] = {}
+                
+                if "availability" in day_data:
+                    self.results[date]["availability"] = CheckResult(
+                        date=date,
+                        checker_name="availability",
+                        status=DataStatus.GOOD,
+                        details={"availability": day_data["availability"]}
+                    )
+                
+                if "analysis" in day_data:
+                    self.results[date]["analysis"] = CheckResult(
+                        date=date,
+                        checker_name="analysis",
+                        status=DataStatus.GOOD,
+                        details={"analysis": day_data["analysis"]}
+                    )
+                
+                loaded_count += 1
+        
+        print(f"Загружено {loaded_count} файлов из папки '{self.output_dir}'")
     
     def get_summary_dataframe(self) -> pd.DataFrame:
         rows = []
@@ -396,7 +463,7 @@ class DataQualityManager:
 
 
 if __name__ == "__main__":
-    manager = DataQualityManager()
+    manager = DataQualityManager(output_dir="data_quality_files")
     
     manager.add_checker(AvailabilityChecker(start_hour=0, end_hour=10))
     manager.add_checker(QualityChecker(
@@ -412,7 +479,7 @@ if __name__ == "__main__":
     
     manager.check_period(start, end)
     
-    manager.save_to_json("data_quality_new.json")
+    manager.save_to_files()
     
     print("\n" + "="*70)
     print("СВОДНАЯ ТАБЛИЦА")
