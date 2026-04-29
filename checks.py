@@ -55,16 +55,6 @@ class CheckResult:
             "details": convert_to_serializable(self.details),
             "comment": self.comment
         }
-    
-    @classmethod
-    def from_dict(cls, data: Dict) -> 'CheckResult':
-        return cls(
-            date=datetime.date.fromisoformat(data["date"]),
-            checker_name=data["checker_name"],
-            status=DataStatus(data["status"]),  
-            details=data.get("details", {}),
-            comment=data.get("comment", "")
-        )
 
 
 class DataChecker(ABC):
@@ -144,18 +134,13 @@ class QualityChecker(DataChecker):
         slope_threshold: float = 0.01,
         trend_significance: float = 0.05
     ):
-        super().__init__("analysis")
+        super().__init__("flux")
         self.start_hour = start_hour
         self.end_hour = end_hour
         self.n_segments = n_segments
         self.valley_depth_threshold = valley_depth_threshold
         self.slope_threshold = slope_threshold
         self.trend_significance = trend_significance
-    
-    def _get_all_frequencies(self, corr) -> List[int]:
-        if hasattr(corr, 'frequencies') and corr.frequencies is not None:
-            return sorted(corr.frequencies.tolist())
-        return []
     
     def _smooth_data(self, data, window_length=None):
         if len(data) < 10:
@@ -266,7 +251,8 @@ class QualityChecker(DataChecker):
                     "comment": f"Проблемный тренд: {', '.join(analysis['problem_reasons'])}",
                     "frequency": frequency,
                     "n_points": analysis["n_points"],
-                    "time_range": f"{times[0].strftime('%H:%M')}-{times[-1].strftime('%H:%M')}",
+                    "time_start": f"{times[0].strftime('%H:%M')}",
+                    "time_range": f"{times[-1].strftime('%H:%M')}",
                     "flux_I_median": analysis["flux_median"],
                     "flux_I_std": analysis["flux_std"],
                     "trend_slope": analysis["slope"],
@@ -279,7 +265,8 @@ class QualityChecker(DataChecker):
                 "comment": f"flux_I={analysis['flux_median']:.1f} SFU, стабильный",
                 "frequency": frequency,
                 "n_points": analysis["n_points"],
-                "time_range": f"{times[0].strftime('%H:%M')}-{times[-1].strftime('%H:%M')}",
+                "time_start": f"{times[0].strftime('%H:%M')}",
+                "time_stop": f"{times[-1].strftime('%H:%M')}",
                 "flux_I_median": analysis["flux_median"],
                 "flux_I_std": analysis["flux_std"],
                 "trend_slope": analysis["slope"],
@@ -294,7 +281,6 @@ class QualityChecker(DataChecker):
         gratings = ['SRH0306', 'SRH0612', 'SRH1224']
         
         grating_frequencies = {}
-        all_freqs = set()
         
         for grating in gratings:
             try:
@@ -302,7 +288,6 @@ class QualityChecker(DataChecker):
                 if test_corr.data is not None and hasattr(test_corr, 'frequencies'):
                     freqs = sorted(test_corr.frequencies.tolist())
                     grating_frequencies[grating] = freqs
-                    all_freqs.update(freqs)
             except:
                 if grating == 'SRH0306':
                     freqs = [2800, 3000, 3200, 3400, 3600, 3800, 4000, 4200, 4400, 4600, 4800, 5000, 5200, 5400, 5600, 5800]
@@ -311,7 +296,6 @@ class QualityChecker(DataChecker):
                 elif grating == 'SRH1224':
                     freqs = [12200, 12960, 13720, 14480, 15240, 16000, 16760, 17520, 18280, 19040, 19800, 20560, 21320, 22080, 23000, 23400]
                 grating_frequencies[grating] = freqs
-                all_freqs.update(freqs)
         
         results = {}
         overall_status = DataStatus.GOOD
@@ -328,7 +312,7 @@ class QualityChecker(DataChecker):
                         overall_status = DataStatus(freq_result["state"])
         
         details = {
-            "analysis": results
+            "flux": results
         }
         
         problem_count = sum(
@@ -358,7 +342,7 @@ class DataQualityManager:
         
         if not os.path.exists(output_dir):
             os.makedirs(output_dir)
-            print(f"Создана папка: {output_dir}")
+            print(f" Создана папка: {output_dir}")
     
     def add_checker(self, checker: DataChecker):
         self.checkers[checker.name] = checker
@@ -391,65 +375,33 @@ class DataQualityManager:
         for date, date_results in self.results.items():
             day_dict = {"date": date.isoformat()}
             
-            for checker_name, result in date_results.items():
-                result_dict = result.to_dict()
-                if checker_name == "availability":
-                    day_dict["availability"] = result_dict["details"].get("availability", {})
-                elif checker_name == "analysis":
-                    day_dict["analysis"] = result_dict["details"].get("analysis", {})
+            for grating in ['SRH0306', 'SRH0612', 'SRH1224']:
+                day_dict[grating] = {
+                    "availability": False,
+                    "flux": {}
+                }
             
-            ordered_day = {"date": day_dict["date"]}
-            if "availability" in day_dict:
-                ordered_day["availability"] = day_dict["availability"]
-            if "analysis" in day_dict:
-                ordered_day["analysis"] = day_dict["analysis"]
+            if "availability" in date_results:
+                avail_details = date_results["availability"].to_dict()["details"]
+                availability = avail_details.get("availability", {})
+                for grating, is_available in availability.items():
+                    if grating in day_dict:
+                        day_dict[grating]["availability"] = is_available
+            
+            if "flux" in date_results:
+                spectral_details = date_results["flux"].to_dict()["details"]
+                spectral_data = spectral_details.get("flux", {})
+                for grating, freq_data in spectral_data.items():
+                    if grating in day_dict:
+                        day_dict[grating]["flux"] = freq_data
             
             filename = os.path.join(self.output_dir, f"{date.isoformat()}.json")
             with open(filename, 'w', encoding='utf-8') as f:
-                json.dump(ordered_day, f, ensure_ascii=False, indent=2)
+                json.dump(day_dict, f, ensure_ascii=False, indent=2)
             
             saved_count += 1
         
         print(f"\n Сохранено {saved_count} файлов в папку '{self.output_dir}'")
-    
-    def load_from_files(self):
-
-        if not os.path.exists(self.output_dir):
-            print(f"Папка {self.output_dir} не найдена")
-            return
-        
-        self.results = {}
-        loaded_count = 0
-        
-        for filename in os.listdir(self.output_dir):
-            if filename.endswith('.json'):
-                filepath = os.path.join(self.output_dir, filename)
-                
-                with open(filepath, 'r', encoding='utf-8') as f:
-                    day_data = json.load(f)
-                
-                date = datetime.date.fromisoformat(day_data["date"])
-                self.results[date] = {}
-                
-                if "availability" in day_data:
-                    self.results[date]["availability"] = CheckResult(
-                        date=date,
-                        checker_name="availability",
-                        status=DataStatus.GOOD,
-                        details={"availability": day_data["availability"]}
-                    )
-                
-                if "analysis" in day_data:
-                    self.results[date]["analysis"] = CheckResult(
-                        date=date,
-                        checker_name="analysis",
-                        status=DataStatus.GOOD,
-                        details={"analysis": day_data["analysis"]}
-                    )
-                
-                loaded_count += 1
-        
-        print(f"Загружено {loaded_count} файлов из папки '{self.output_dir}'")
     
     def get_summary_dataframe(self) -> pd.DataFrame:
         rows = []
@@ -471,7 +423,7 @@ if __name__ == "__main__":
         end_hour=9,
         n_segments=8,
         valley_depth_threshold=20,
-        slope_threshold=0.0055
+        slope_threshold=0.008
     ))
     
     start = datetime.date(2024, 5, 7)
