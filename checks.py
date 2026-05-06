@@ -11,6 +11,9 @@ from enum import Enum
 from abc import ABC, abstractmethod
 from scipy import stats
 from scipy.signal import savgol_filter
+import astropy.constants as const
+import astropy.units as u
+from srhimages.helpers.zirin_tb import SRHQSunTb
 
 
 class DataStatus(Enum):
@@ -84,6 +87,43 @@ class AvailabilityChecker(DataChecker):
         self.end_hour = end_hour
         self.gratings = ['SRH0306', 'SRH0612', 'SRH1224']
     
+    def _check_time_sequence(self, times: List[datetime.datetime]) -> Dict[str, Any]:
+
+        if len(times) < 2:
+            return {
+                "time_range": "NO_DATA",
+                "time_issues": [],
+                "time_start": times[0].strftime('%H:%M:%S') if times else None,
+                "time_end": times[-1].strftime('%H:%M:%S') if times else None
+            }
+        
+        issues = []
+        
+        for i in range(1, len(times)):
+            time_diff = (times[i] - times[i-1]).total_seconds()
+            
+            if time_diff < 0:
+                issues.append(f"Скачок назад на {abs(time_diff):.1f} сек в {times[i-1].strftime('%H:%M:%S')} -> {times[i].strftime('%H:%M:%S')}")
+            
+            elif time_diff > 3600:
+                issues.append(f"Большой промежуток {time_diff/3600:.1f} часов между {times[i-1].strftime('%H:%M:%S')} и {times[i].strftime('%H:%M:%S')}")
+        
+        if len(issues) == 0:
+            time_range_status = "GOOD"
+        elif any("Скачок назад" in issue for issue in issues):
+            time_range_status = "BAD"
+        else:
+            time_range_status = "PROBLEM"
+        
+        return {
+            "time_range": time_range_status,
+            "time_issues": issues,
+            "time_start": times[0].strftime('%H:%M:%S'),
+            "time_end": times[-1].strftime('%H:%M:%S'),
+            "total_points": len(times),
+            "time_span_hours": (times[-1] - times[0]).total_seconds() / 3600
+        }
+    
     def check_day(self, date: datetime.date) -> CheckResult:
         t1 = datetime.datetime.combine(date, datetime.time(self.start_hour, 0, 0))
         t2 = datetime.datetime.combine(date, datetime.time(self.end_hour, 0, 0))
@@ -91,12 +131,43 @@ class AvailabilityChecker(DataChecker):
         try:
             frequencies = srhimages.get_frequencies(t1, t2)
             availability = {}
+            time_checks = {}
+            
             for grating in self.gratings:
                 availability[grating] = (grating in frequencies and len(frequencies[grating]) > 0)
+                
+                if availability[grating]:
+                    try:
+                      
+                        test_corr = srhcp.SRHCorrPlot(date, grating, None, "corrplot_cache")
+                        if test_corr.data is not None and hasattr(test_corr, 'times'):
+                            time_check = self._check_time_sequence(test_corr.times)
+                            time_checks[grating] = time_check
+                        else:
+                            time_checks[grating] = {
+                                "time_range": "NO_DATA",
+                                "time_issues": ["Не удалось получить временные метки"]
+                            }
+                    except Exception as e:
+                        time_checks[grating] = {
+                            "time_range": "NO_DATA",
+                            "time_issues": [f"Ошибка проверки времени: {str(e)}"]
+                        }
+                else:
+                    time_checks[grating] = {
+                        "time_range": "NO_DATA",
+                        "time_issues": ["Решетка недоступна"]
+                    }
             
             if all(availability.values()):
                 status = DataStatus.GOOD
                 comment = "Все решётки доступны"
+                
+                bad_time_count = sum(1 for tc in time_checks.values() if tc.get("time_range") == "BAD")
+                if bad_time_count > 0:
+                    status = DataStatus.BAD
+                    comment += f", но проблемы с временной последовательностью в {bad_time_count} решётках"
+                    
             elif any(availability.values()):
                 status = DataStatus.PROBLEM
                 missing = [g for g, avail in availability.items() if not avail]
@@ -109,7 +180,10 @@ class AvailabilityChecker(DataChecker):
                 date=date,
                 checker_name=self.name,
                 status=status,
-                details={"availability": availability},
+                details={
+                    "availability": availability,
+                    "time_checks": time_checks
+                },
                 comment=comment
             )
             
@@ -129,89 +203,134 @@ class QualityChecker(DataChecker):
         self, 
         start_hour: int = 1, 
         end_hour: int = 9,
-        n_segments: int = 8,
-        valley_depth_threshold: float = 15,
-        slope_threshold: float = 0.01,
-        trend_significance: float = 0.05
+        sfu_min_ratio: float = 0.9,
+        sfu_max_ratio: float = 10.0,
+        anomaly_threshold_percent: float = 50, 
+        anomaly_duration_minutes: int = 40  
     ):
         super().__init__("flux")
         self.start_hour = start_hour
         self.end_hour = end_hour
-        self.n_segments = n_segments
-        self.valley_depth_threshold = valley_depth_threshold
-        self.slope_threshold = slope_threshold
-        self.trend_significance = trend_significance
+        self.sfu_min_ratio = sfu_min_ratio
+        self.sfu_max_ratio = sfu_max_ratio
+        self.anomaly_threshold_percent = anomaly_threshold_percent
+        self.anomaly_duration_minutes = anomaly_duration_minutes
     
-    def _smooth_data(self, data, window_length=None):
-        if len(data) < 10:
-            return data
-        
-        if window_length is None:
-            window_length = min(11, len(data) - 1 if len(data) % 2 == 0 else len(data))
-            if window_length % 2 == 0:
-                window_length -= 1
-            if window_length < 3:
-                window_length = 3
-        
+    def _calculate_sfu(self, freq_mhz: float) -> float:
+
         try:
-            return savgol_filter(data, window_length, 2)
-        except:
-            return data
+            freq_ghz = freq_mhz / 1000.0
+            f = freq_ghz * 1e9 * u.hertz
+            
+            Tb = SRHQSunTb.get_tb(freq_ghz) * u.Kelvin
+            
+            sun_angle = 6.794 * 1e-5
+            
+            energy = 2 * const.k_B * Tb * (f / const.c)**2 * sun_angle
+            
+            sfu = 1e-22 * u.watt * u.meter**-2 * u.hertz**-1
+            
+            return float((energy / sfu).si)
+        except Exception as e:
+            print(f"Ошибка при расчете SFU для {freq_mhz} МГц: {e}")
+            return None
     
-    def _analyze_trend(self, times, flux_I):
-        n = len(flux_I)
+    def _check_sfu_thresholds(self, flux_median: float, freq_mhz: int) -> Dict[str, Any]:
+        expected_sfu = self._calculate_sfu(freq_mhz)
         
-        if n < 5:
-            return {"direction": "stable", "slope": 0, "has_valley": False, 
-                   "valley_depth": 0, "valley_position": 0, "is_problem": False}
+        if expected_sfu is None:
+            return {
+                "sfu_check_passed": True,
+                "sfu_reason": "Не удалось рассчитать SFU",
+                "expected_sfu": None
+            }
         
-        start_time = times[0]
-        time_seconds = np.array([(t - start_time).total_seconds() for t in times])
-        flux_smooth = self._smooth_data(flux_I)
+        min_allowed = expected_sfu * self.sfu_min_ratio
+        max_allowed = expected_sfu * self.sfu_max_ratio
         
-        slope, _, _, p, _ = stats.linregress(time_seconds, flux_smooth)
+        checks_passed = True
+        reasons = []
         
-        if p < self.trend_significance and abs(slope) > self.slope_threshold:
-            direction = "down" if slope < 0 else "up"
-        else:
-            direction = "stable"
+        if flux_median < min_allowed:
+            checks_passed = False
+            reasons.append(f"Медиана ({flux_median:.1f} SFU) меньше {self.sfu_min_ratio*100:.0f}% от SFU ({expected_sfu:.1f} SFU)")
         
-        min_idx = np.argmin(flux_smooth)
-        min_value = flux_smooth[min_idx]
-        start_value = flux_smooth[0]
-        
-        has_valley = False
-        valley_depth = 0
-        valley_position = min_idx / n
-        
-        if start_value > 0:
-            valley_depth = (start_value - min_value) / start_value * 100
-        
-        if valley_depth > self.valley_depth_threshold and 0.2 < valley_position < 0.8:
-            has_valley = True
-        
-        is_problem = False
-        problem_reasons = []
-        
-        if direction == "down":
-            is_problem = True
-            problem_reasons.append(f"нисходящий тренд (slope={slope:.3f})")
-        
-        if has_valley:
-            is_problem = True
-            problem_reasons.append(f"галочка глубиной {valley_depth:.1f}%")
+        if flux_median > max_allowed:
+            checks_passed = False
+            reasons.append(f"Медиана ({flux_median:.1f} SFU) превышает SFU ({expected_sfu:.1f} SFU) в {flux_median/expected_sfu:.1f} раз")
         
         return {
-            "direction": direction,
-            "slope": slope,
-            "has_valley": has_valley,
-            "valley_depth": valley_depth,
-            "valley_position": valley_position,
-            "is_problem": is_problem,
-            "problem_reasons": problem_reasons,
-            "n_points": n,
-            "flux_median": float(np.median(flux_I)),
-            "flux_std": float(np.std(flux_I))
+            "sfu_check_passed": checks_passed,
+            "expected_sfu": expected_sfu,
+            "min_allowed": min_allowed,
+            "max_allowed": max_allowed,
+            "flux_median_sfu": flux_median,
+            "ratio_to_sfu": flux_median / expected_sfu if expected_sfu > 0 else None,
+            "sfu_reason": ", ".join(reasons) if reasons else "Поток в норме относительно SFU"
+        }
+    
+    def _find_anomalies(self, times: List[datetime.datetime], flux_I: np.ndarray, median_value: float) -> Dict[str, Any]:
+
+        if len(flux_I) < 2:
+            return {
+                "has_anomalies": False,
+                "anomaly_periods": []
+            }
+        
+        lower_threshold = median_value * (1 - self.anomaly_threshold_percent / 100)
+        
+        anomaly_periods = []
+        in_anomaly = False
+        anomaly_start_idx = 0
+        
+        for i in range(len(flux_I)):
+            is_anomaly = flux_I[i] < lower_threshold
+            
+            if is_anomaly and not in_anomaly:
+                
+                in_anomaly = True
+                anomaly_start_idx = i
+            elif not is_anomaly and in_anomaly:
+               
+                in_anomaly = False
+                
+                duration_seconds = (times[i-1] - times[anomaly_start_idx]).total_seconds()
+                duration_minutes = duration_seconds / 60
+                
+                if duration_minutes >= self.anomaly_duration_minutes:
+                    anomaly_data = flux_I[anomaly_start_idx:i]
+                    anomaly_periods.append({
+                        "start_time": times[anomaly_start_idx].strftime('%H:%M:%S'),
+                        "end_time": times[i-1].strftime('%H:%M:%S'),
+                        "duration_minutes": round(duration_minutes, 1),
+                        "min_value": float(np.min(anomaly_data)),
+                        "max_value": float(np.max(anomaly_data)),
+                        "mean_value": float(np.mean(anomaly_data)),
+                        "median_value": float(np.median(anomaly_data)),
+                        "deviation_percent": round(abs(np.mean(anomaly_data) - median_value) / median_value * 100, 1)
+                    })
+        
+        if in_anomaly:
+            duration_seconds = (times[-1] - times[anomaly_start_idx]).total_seconds()
+            duration_minutes = duration_seconds / 60
+            
+            if duration_minutes >= self.anomaly_duration_minutes:
+                anomaly_data = flux_I[anomaly_start_idx:]
+                anomaly_periods.append({
+                    "start_time": times[anomaly_start_idx].strftime('%H:%M:%S'),
+                    "end_time": times[-1].strftime('%H:%M:%S'),
+                    "duration_minutes": round(duration_minutes, 1),
+                    "min_value": float(np.min(anomaly_data)),
+                    "max_value": float(np.max(anomaly_data)),
+                    "mean_value": float(np.mean(anomaly_data)),
+                    "median_value": float(np.median(anomaly_data)),
+                    "deviation_percent": round(abs(np.mean(anomaly_data) - median_value) / median_value * 100, 1)
+                })
+        
+        return {
+            "has_anomalies": len(anomaly_periods) > 0,
+            "anomaly_periods": anomaly_periods,
+            "threshold_low": lower_threshold
         }
     
     def _check_frequency(self, date: datetime.date, array: str, frequency: int) -> Dict[str, Any]:
@@ -243,36 +362,47 @@ class QualityChecker(DataChecker):
                     "comment": f"Аномальные выбросы: max={np.max(flux_I):.1e}"
                 }
             
-            analysis = self._analyze_trend(times, flux_I)
+            flux_median = float(np.median(flux_I))
+            flux_std = float(np.std(flux_I))
+            flux_mean = float(np.mean(flux_I))
+            n_points = len(flux_I)
             
-            if analysis["is_problem"]:
-                return {
-                    "state": DataStatus.PROBLEM.value,
-                    "comment": f"Проблемный тренд: {', '.join(analysis['problem_reasons'])}",
-                    "frequency": frequency,
-                    "n_points": analysis["n_points"],
-                    "time_start": f"{times[0].strftime('%H:%M')}",
-                    "time_range": f"{times[-1].strftime('%H:%M')}",
-                    "flux_I_median": analysis["flux_median"],
-                    "flux_I_std": analysis["flux_std"],
-                    "trend_slope": analysis["slope"],
-                    "trend_direction": analysis["direction"],
-                    "has_valley": analysis["has_valley"]
-                }
+            sfu_check = self._check_sfu_thresholds(flux_median, frequency)
             
-            return {
-                "state": DataStatus.GOOD.value,
-                "comment": f"flux_I={analysis['flux_median']:.1f} SFU, стабильный",
-                "frequency": frequency,
-                "n_points": analysis["n_points"],
+            anomaly_check = self._find_anomalies(times, flux_I, flux_median)
+            
+            all_reasons = []
+            
+            if not sfu_check["sfu_check_passed"]:
+                all_reasons.append(sfu_check["sfu_reason"])
+            
+            if anomaly_check["has_anomalies"]:
+                for period in anomaly_check["anomaly_periods"]:
+                    all_reasons.append(
+                        f"Провал данных на {period['deviation_percent']}% от медианы "
+                        f"({period['duration_minutes']} мин: "
+                        f"{period['start_time']}-{period['end_time']})"
+                    )
+            
+            if not sfu_check["sfu_check_passed"]:
+                status = DataStatus.BAD.value  
+            elif anomaly_check["has_anomalies"]:
+                status = DataStatus.PROBLEM.value  
+            else:
+                status = DataStatus.GOOD.value
+            
+            result = {
+                "state": status,
+                "comment": "; ".join(all_reasons) if all_reasons else "OK",
                 "time_start": f"{times[0].strftime('%H:%M')}",
-                "time_stop": f"{times[-1].strftime('%H:%M')}",
-                "flux_I_median": analysis["flux_median"],
-                "flux_I_std": analysis["flux_std"],
-                "trend_slope": analysis["slope"],
-                "trend_direction": analysis["direction"],
-                "has_valley": analysis["has_valley"]
+                "time_range": f"{times[-1].strftime('%H:%M')}",
+                "flux_I_median": flux_median,
+                "flux_I_mean": flux_mean,
+                "expected_sfu": sfu_check.get("expected_sfu"),
+                "sfu_ratio": sfu_check.get("ratio_to_sfu"),
             }
+            
+            return result
             
         except Exception as e:
             return {"state": DataStatus.NO_DATA.value, "comment": f"Ошибка: {str(e)}"}
@@ -307,9 +437,10 @@ class QualityChecker(DataChecker):
                 freq_result = self._check_frequency(date, grating, freq)
                 results[grating][str(freq)] = freq_result
                 
-                if freq_result.get("state") in [DataStatus.BAD.value, DataStatus.PROBLEM.value]:
-                    if overall_status == DataStatus.GOOD:
-                        overall_status = DataStatus(freq_result["state"])
+                if freq_result.get("state") == DataStatus.BAD.value:
+                    overall_status = DataStatus.BAD
+                elif freq_result.get("state") == DataStatus.PROBLEM.value and overall_status != DataStatus.BAD:
+                    overall_status = DataStatus.PROBLEM
         
         details = {
             "flux": results
@@ -368,6 +499,15 @@ class DataQualityManager:
                 }.get(result.status, "❓")
                 
                 print(f"{result.date}: {status_icon} {result.status.value} - {result.comment}")
+                
+                if checker_name == "availability":
+                    details = result.to_dict()["details"]
+                    time_checks = details.get("time_checks", {})
+                    for grating, tc in time_checks.items():
+                        time_status = tc.get("time_range", "UNKNOWN")
+                        time_issues = tc.get("time_issues", [])
+                        if time_issues:
+                            print(f"  {grating} time_range: {time_status} - {', '.join(time_issues)}")
     
     def save_to_files(self):
         saved_count = 0
@@ -378,15 +518,20 @@ class DataQualityManager:
             for grating in ['SRH0306', 'SRH0612', 'SRH1224']:
                 day_dict[grating] = {
                     "availability": False,
+                    "time_range": "NO_DATA",
                     "flux": {}
                 }
             
             if "availability" in date_results:
                 avail_details = date_results["availability"].to_dict()["details"]
                 availability = avail_details.get("availability", {})
+                time_checks = avail_details.get("time_checks", {})
+                
                 for grating, is_available in availability.items():
                     if grating in day_dict:
                         day_dict[grating]["availability"] = is_available
+                        if grating in time_checks:
+                            day_dict[grating]["time_range"] = time_checks[grating].get("time_range", "NO_DATA")
             
             if "flux" in date_results:
                 spectral_details = date_results["flux"].to_dict()["details"]
@@ -409,6 +554,13 @@ class DataQualityManager:
             row = {"Date": date}
             for checker_name, result in date_results.items():
                 row[checker_name] = result.status.value
+                
+                if checker_name == "availability":
+                    details = result.to_dict()["details"]
+                    time_checks = details.get("time_checks", {})
+                    for grating, tc in time_checks.items():
+                        row[f"{grating}_time_range"] = tc.get("time_range", "NO_DATA")
+            
             rows.append(row)
         
         return pd.DataFrame(rows).set_index("Date")
@@ -421,13 +573,14 @@ if __name__ == "__main__":
     manager.add_checker(QualityChecker(
         start_hour=1, 
         end_hour=9,
-        n_segments=8,
-        valley_depth_threshold=20,
-        slope_threshold=0.008
+        sfu_min_ratio=0.9,
+        sfu_max_ratio=10.0,
+        anomaly_threshold_percent=40,  
+        anomaly_duration_minutes=40    
     ))
     
-    start = datetime.date(2024, 5, 7)
-    end = datetime.date(2024, 5, 12)
+    start = datetime.date(2024, 5, 1)
+    end = datetime.date(2024, 5, 30)
     
     manager.check_period(start, end)
     

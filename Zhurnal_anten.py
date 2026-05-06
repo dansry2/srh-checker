@@ -6,6 +6,10 @@ import os
 
 
 def parse_antenna_journal(excel_path: str) -> dict:
+    """
+    Парсит Excel файл с журналом ошибок антенн.
+    Возвращает словарь {date: {grating: notes}}
+    """
     if not os.path.exists(excel_path):
         raise FileNotFoundError(f"Файл не найден: {excel_path}")
     
@@ -72,20 +76,19 @@ def parse_antenna_journal(excel_path: str) -> dict:
     return dict(journal_data)
 
 
-def update_files_with_journal(data_dir: str, excel_path: str, create_backup: bool = True):
+def update_files_with_journal(data_dir: str, excel_path: str):
 
-    print(" Парсинг журнала ошибок...")
+    print("📋 Парсинг журнала ошибок...")
     journal_data = parse_antenna_journal(excel_path)
-    print(f" Найдено записей для {len(journal_data)} дней")
+    print(f"📊 Найдено записей для {len(journal_data)} дней")
     
     if not os.path.exists(data_dir):
-        print(f"\n Папка не найдена: {data_dir}")
+        print(f"\n❌ Папка не найдена: {data_dir}")
         return 0
-    
     
     updated_count = 0
     
-    for filename in os.listdir(data_dir):
+    for filename in sorted(os.listdir(data_dir)):
         if not filename.endswith('.json'):
             continue
         
@@ -100,16 +103,18 @@ def update_files_with_journal(data_dir: str, excel_path: str, create_backup: boo
         if date_obj in journal_data:
             for grating, notes_text in journal_data[date_obj].items():
                 if grating in day_data:
-                    day_data[grating]["journal_notes"] = {"details": notes_text}
-                    print(f"  📝 {date_str} / {grating}: добавлены свёрнутые примечания")
+                    day_data[grating]["journal_notes"] = {
+                        "details": notes_text
+                    }
+                    print(f"  📝 {date_str} / {grating}: добавлены примечания из журнала")
             
             updated_count += 1
         
         with open(filepath, 'w', encoding='utf-8') as f:
             json.dump(day_data, f, ensure_ascii=False, indent=2)
     
-    print(f"\n Обновлено {updated_count} файлов")
-    print(f" Файлы обновлены в '{data_dir}'")
+    print(f"\n✅ Обновлено {updated_count} файлов")
+    print(f"📁 Файлы обновлены в '{data_dir}'")
     
     return updated_count
 
@@ -123,37 +128,44 @@ if __name__ == "__main__":
     excel_path = "Radioheliograph.xlsx"
     
     if not os.path.exists(data_dir):
-        print(f"\n Папка не найдена: {data_dir}")
+        print(f"\n❌ Папка не найдена: {data_dir}")
         exit(1)
     
     if not os.path.exists(excel_path):
-        print(f"\n Excel файл не найден: {excel_path}")
+        print(f"\n❌ Excel файл не найден: {excel_path}")
         exit(1)
     
-    updated = update_files_with_journal(data_dir, excel_path, create_backup=True)
+    updated = update_files_with_journal(data_dir, excel_path)
     
     if updated >= 0:
         print("\n" + "="*70)
-        print(" ГОТОВО!")
+        print("✅ ГОТОВО!")
         print("="*70)
         
-        sample_files = [f for f in os.listdir(data_dir) if f.endswith('.json')]
+        sample_files = sorted([f for f in os.listdir(data_dir) if f.endswith('.json')])
         if sample_files:
             sample_file = sample_files[0]
-            print(f"\n🔍 Пример файла: {sample_file}")
+            print(f"\n📄 Пример файла: {sample_file}")
             
             with open(os.path.join(data_dir, sample_file), 'r', encoding='utf-8') as f:
                 sample_data = json.load(f)
             
-            print(f"\n  date: {sample_data.get('date')}")
+            print(f"  date: {sample_data.get('date')}")
+            
             for grating_name in ['SRH0306', 'SRH0612', 'SRH1224']:
                 if grating_name in sample_data:
                     grating_data = sample_data[grating_name]
                     print(f"\n  📡 {grating_name}:")
                     print(f"     - availability: {grating_data.get('availability')}")
+                    print(f"     - time_range: {grating_data.get('time_range', 'N/A')}")
                     print(f"     - flux: {len(grating_data.get('flux', {}))} частот")
-                    journal = grating_data.get('journal_notes', '')
-                    if journal:
-                        print(f"     - journal_notes: {journal[:100]}...")
+                    
+                    journal = grating_data.get('journal_notes', {})
+                    if journal and journal.get('details'):
+                        print(f"     - journal_notes: {journal['details'][:150]}...")
                     else:
                         print(f"     - journal_notes: нет")
+    
+    print("\n" + "="*70)
+    print("✅ Интеграция журнала завершена!")
+    print("="*70)
