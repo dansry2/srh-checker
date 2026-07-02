@@ -358,7 +358,7 @@ class QualityChecker(DataChecker):
             
             if np.max(flux_I) > 1e6:
                 return {
-                    "state": DataStatus.BAD.value,
+                    "state": DataStatus.PROBLEM.value,
                     "comment": f"Аномальные выбросы: max={np.max(flux_I):.1e}"
                 }
             
@@ -418,14 +418,6 @@ class QualityChecker(DataChecker):
                 if test_corr.data is not None and hasattr(test_corr, 'frequencies'):
                     freqs = sorted(test_corr.frequencies.tolist())
                     grating_frequencies[grating] = freqs
-            except:
-                if grating == 'SRH0306':
-                    freqs = [2800, 3000, 3200, 3400, 3600, 3800, 4000, 4200, 4400, 4600, 4800, 5000, 5200, 5400, 5600, 5800]
-                elif grating == 'SRH0612':
-                    freqs = [6000, 6400, 6800, 7200, 7600, 8000, 8400, 8800, 9200, 9600, 10000, 10400, 10800, 11200, 11600, 12000]
-                elif grating == 'SRH1224':
-                    freqs = [12200, 12960, 13720, 14480, 15240, 16000, 16760, 17520, 18280, 19040, 19800, 20560, 21320, 22080, 23000, 23400]
-                grating_frequencies[grating] = freqs
         
         results = {}
         overall_status = DataStatus.GOOD
