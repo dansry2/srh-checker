@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "srh-data-reports"
-version = "0.1.4"
+version = "0.1.6"
 description = "package"
 readme = "README.md"
 requires-python = ">=3.8"
@@ -33,7 +33,7 @@ srh-data-report = "srh_data_report.cli:main"
 
 [project.urls]
 Homepage = "https://github.com/dansry2/srh-checker"
-Repository = "https://github.com/dansry2/srh_checker"
+Repository = "https://github.com/dansry2/srh-checker"
 
 [tool.setuptools]
 package-dir = {"" = "srh"}
