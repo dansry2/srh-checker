@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+
+<html lang="ru" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>srh_data_report package &#8212; документация srh-data-reports </title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=12dfc556" />
+    <script src="_static/documentation_options.js?v=372fde1a"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/translations.js?v=cd1d70c9"></script>
+    <link rel="index" title="Алфавитный указатель" href="genindex.html" />
+    <link rel="search" title="Поиск" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="srh-data-report-package">
+<h1>srh_data_report package<a class="headerlink" href="#srh-data-report-package" title="Ссылка на этот заголовок">¶</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Ссылка на этот заголовок">¶</a></h2>
+</section>
+<section id="module-srh_data_report.Zhurnal_anten">
+<span id="srh-data-report-zhurnal-anten-module"></span><h2>srh_data_report.Zhurnal_anten module<a class="headerlink" href="#module-srh_data_report.Zhurnal_anten" title="Ссылка на этот заголовок">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="srh_data_report.Zhurnal_anten.parse_antenna_journal">
+<span class="sig-prename descclassname"><span class="pre">srh_data_report.Zhurnal_anten.</span></span><span class="sig-name descname"><span class="pre">parse_antenna_journal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">excel_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#srh_data_report.Zhurnal_anten.parse_antenna_journal" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Парсит Excel файл с журналом ошибок антенн.
+Возвращает словарь {date: {grating: notes}}</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="srh_data_report.Zhurnal_anten.update_files_with_journal">
+<span class="sig-prename descclassname"><span class="pre">srh_data_report.Zhurnal_anten.</span></span><span class="sig-name descname"><span class="pre">update_files_with_journal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">excel_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#srh_data_report.Zhurnal_anten.update_files_with_journal" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-srh_data_report.calendarq">
+<span id="srh-data-report-calendarq-module"></span><h2>srh_data_report.calendarq module<a class="headerlink" href="#module-srh_data_report.calendarq" title="Ссылка на этот заголовок">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="srh_data_report.calendarq.analyze_grating_status">
+<span class="sig-prename descclassname"><span class="pre">srh_data_report.calendarq.</span></span><span class="sig-name descname"><span class="pre">analyze_grating_status</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grating_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#srh_data_report.calendarq.analyze_grating_status" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="srh_data_report.calendarq.create_calendar_heatmap">
+<span class="sig-prename descclassname"><span class="pre">srh_data_report.calendarq.</span></span><span class="sig-name descname"><span class="pre">create_calendar_heatmap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">all_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grating</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">year</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#srh_data_report.calendarq.create_calendar_heatmap" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="srh_data_report.calendarq.create_interactive_calendar">
+<span class="sig-prename descclassname"><span class="pre">srh_data_report.calendarq.</span></span><span class="sig-name descname"><span class="pre">create_interactive_calendar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grating</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">year</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#srh_data_report.calendarq.create_interactive_calendar" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="srh_data_report.calendarq.generate_day_pdf_matplotlib">
+<span class="sig-prename descclassname"><span class="pre">srh_data_report.calendarq.</span></span><span class="sig-name descname"><span class="pre">generate_day_pdf_matplotlib</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">date:</span> <span class="pre">~.datetime.date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">day_data:</span> <span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grating:</span> <span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'pdf_reports'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#srh_data_report.calendarq.generate_day_pdf_matplotlib" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="srh_data_report.calendarq.load_all_data">
+<span class="sig-prename descclassname"><span class="pre">srh_data_report.calendarq.</span></span><span class="sig-name descname"><span class="pre">load_all_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#srh_data_report.calendarq.load_all_data" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="srh_data_report.calendarq.on_click">
+<span class="sig-prename descclassname"><span class="pre">srh_data_report.calendarq.</span></span><span class="sig-name descname"><span class="pre">on_click</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">days_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grating</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'pdf_reports'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#srh_data_report.calendarq.on_click" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-srh_data_report.checks">
+<span id="srh-data-report-checks-module"></span><h2>srh_data_report.checks module<a class="headerlink" href="#module-srh_data_report.checks" title="Ссылка на этот заголовок">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="srh_data_report.checks.AvailabilityChecker">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">srh_data_report.checks.</span></span><span class="sig-name descname"><span class="pre">AvailabilityChecker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start_hour</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_hour</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#srh_data_report.checks.AvailabilityChecker" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <a class="reference internal" href="#srh_data_report.checks.DataChecker" title="srh_data_report.checks.DataChecker"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataChecker</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="srh_data_report.checks.AvailabilityChecker.check_day">
+<span class="sig-name descname"><span class="pre">check_day</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">date</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#srh_data_report.checks.CheckResult" title="srh_data_report.checks.CheckResult"><span class="pre">CheckResult</span></a></span></span><a class="headerlink" href="#srh_data_report.checks.AvailabilityChecker.check_day" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="srh_data_report.checks.CheckResult">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">srh_data_report.checks.</span></span><span class="sig-name descname"><span class="pre">CheckResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">date:</span> <span class="pre">datetime.date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">checker_name:</span> <span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status:</span> <span class="pre">srh_data_report.checks.DataStatus</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">details:</span> <span class="pre">Dict[str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Any]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comment:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#srh_data_report.checks.CheckResult" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="srh_data_report.checks.CheckResult.checker_name">
+<span class="sig-name descname"><span class="pre">checker_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#srh_data_report.checks.CheckResult.checker_name" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="srh_data_report.checks.CheckResult.comment">
+<span class="sig-name descname"><span class="pre">comment</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">''</span></em><a class="headerlink" href="#srh_data_report.checks.CheckResult.comment" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="srh_data_report.checks.CheckResult.date">
+<span class="sig-name descname"><span class="pre">date</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">date</span></em><a class="headerlink" href="#srh_data_report.checks.CheckResult.date" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="srh_data_report.checks.CheckResult.details">
+<span class="sig-name descname"><span class="pre">details</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#srh_data_report.checks.CheckResult.details" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="srh_data_report.checks.CheckResult.status">
+<span class="sig-name descname"><span class="pre">status</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#srh_data_report.checks.DataStatus" title="srh_data_report.checks.DataStatus"><span class="pre">DataStatus</span></a></em><a class="headerlink" href="#srh_data_report.checks.CheckResult.status" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="srh_data_report.checks.CheckResult.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span></span></span><a class="headerlink" href="#srh_data_report.checks.CheckResult.to_dict" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="srh_data_report.checks.DataChecker">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">srh_data_report.checks.</span></span><span class="sig-name descname"><span class="pre">DataChecker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#srh_data_report.checks.DataChecker" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="srh_data_report.checks.DataChecker.check_day">
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">check_day</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">date</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#srh_data_report.checks.CheckResult" title="srh_data_report.checks.CheckResult"><span class="pre">CheckResult</span></a></span></span><a class="headerlink" href="#srh_data_report.checks.DataChecker.check_day" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="srh_data_report.checks.DataChecker.check_period">
+<span class="sig-name descname"><span class="pre">check_period</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start_date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">date</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#srh_data_report.checks.CheckResult" title="srh_data_report.checks.CheckResult"><span class="pre">CheckResult</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#srh_data_report.checks.DataChecker.check_period" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="srh_data_report.checks.DataQualityManager">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">srh_data_report.checks.</span></span><span class="sig-name descname"><span class="pre">DataQualityManager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'data_quality'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#srh_data_report.checks.DataQualityManager" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="srh_data_report.checks.DataQualityManager.add_checker">
+<span class="sig-name descname"><span class="pre">add_checker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">checker</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#srh_data_report.checks.DataChecker" title="srh_data_report.checks.DataChecker"><span class="pre">DataChecker</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#srh_data_report.checks.DataQualityManager.add_checker" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="srh_data_report.checks.DataQualityManager.check_period">
+<span class="sig-name descname"><span class="pre">check_period</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start_date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">date</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#srh_data_report.checks.DataQualityManager.check_period" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="srh_data_report.checks.DataQualityManager.get_summary_dataframe">
+<span class="sig-name descname"><span class="pre">get_summary_dataframe</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#srh_data_report.checks.DataQualityManager.get_summary_dataframe" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="srh_data_report.checks.DataQualityManager.save_to_files">
+<span class="sig-name descname"><span class="pre">save_to_files</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#srh_data_report.checks.DataQualityManager.save_to_files" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="srh_data_report.checks.DataStatus">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">srh_data_report.checks.</span></span><span class="sig-name descname"><span class="pre">DataStatus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#srh_data_report.checks.DataStatus" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="srh_data_report.checks.DataStatus.BAD">
+<span class="sig-name descname"><span class="pre">BAD</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'BAD'</span></em><a class="headerlink" href="#srh_data_report.checks.DataStatus.BAD" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="srh_data_report.checks.DataStatus.GOOD">
+<span class="sig-name descname"><span class="pre">GOOD</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'GOOD'</span></em><a class="headerlink" href="#srh_data_report.checks.DataStatus.GOOD" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="srh_data_report.checks.DataStatus.NOT_CHECKED">
+<span class="sig-name descname"><span class="pre">NOT_CHECKED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'NOT_CHECKED'</span></em><a class="headerlink" href="#srh_data_report.checks.DataStatus.NOT_CHECKED" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="srh_data_report.checks.DataStatus.NO_DATA">
+<span class="sig-name descname"><span class="pre">NO_DATA</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'NO_DATA'</span></em><a class="headerlink" href="#srh_data_report.checks.DataStatus.NO_DATA" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="srh_data_report.checks.DataStatus.PROBLEM">
+<span class="sig-name descname"><span class="pre">PROBLEM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'PROBLEM'</span></em><a class="headerlink" href="#srh_data_report.checks.DataStatus.PROBLEM" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="srh_data_report.checks.QualityChecker">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">srh_data_report.checks.</span></span><span class="sig-name descname"><span class="pre">QualityChecker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start_hour</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_hour</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">9</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sfu_min_ratio</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.9</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sfu_max_ratio</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">anomaly_threshold_percent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">anomaly_duration_minutes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">40</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#srh_data_report.checks.QualityChecker" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <a class="reference internal" href="#srh_data_report.checks.DataChecker" title="srh_data_report.checks.DataChecker"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataChecker</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="srh_data_report.checks.QualityChecker.check_day">
+<span class="sig-name descname"><span class="pre">check_day</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">date</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#srh_data_report.checks.CheckResult" title="srh_data_report.checks.CheckResult"><span class="pre">CheckResult</span></a></span></span><a class="headerlink" href="#srh_data_report.checks.QualityChecker.check_day" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-srh_data_report.cli">
+<span id="srh-data-report-cli-module"></span><h2>srh_data_report.cli module<a class="headerlink" href="#module-srh_data_report.cli" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Интерфейс командной строки.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="srh_data_report.cli.main">
+<span class="sig-prename descclassname"><span class="pre">srh_data_report.cli.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#srh_data_report.cli.main" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-srh_data_report.oboznach">
+<span id="srh-data-report-oboznach-module"></span><h2>srh_data_report.oboznach module<a class="headerlink" href="#module-srh_data_report.oboznach" title="Ссылка на этот заголовок">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="srh_data_report.oboznach.reorganize_csv">
+<span class="sig-prename descclassname"><span class="pre">srh_data_report.oboznach.</span></span><span class="sig-name descname"><span class="pre">reorganize_csv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">column_mapping</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">column_order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#srh_data_report.oboznach.reorganize_csv" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Переименование и перестановка колонок в уже сохраненном CSV</p>
+</dd></dl>
+
+</section>
+<section id="module-srh_data_report.obshgraf">
+<span id="srh-data-report-obshgraf-module"></span><h2>srh_data_report.obshgraf module<a class="headerlink" href="#module-srh_data_report.obshgraf" title="Ссылка на этот заголовок">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="srh_data_report.obshgraf.analyze_grating_status">
+<span class="sig-prename descclassname"><span class="pre">srh_data_report.obshgraf.</span></span><span class="sig-name descname"><span class="pre">analyze_grating_status</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grating_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#srh_data_report.obshgraf.analyze_grating_status" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Анализирует статус решетки за день.
+Возвращает общий статус и статистику.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="srh_data_report.obshgraf.create_summary_plot">
+<span class="sig-prename descclassname"><span class="pre">srh_data_report.obshgraf.</span></span><span class="sig-name descname"><span class="pre">create_summary_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">all_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#srh_data_report.obshgraf.create_summary_plot" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Создает сводный график по всем решеткам.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="srh_data_report.obshgraf.load_all_data">
+<span class="sig-prename descclassname"><span class="pre">srh_data_report.obshgraf.</span></span><span class="sig-name descname"><span class="pre">load_all_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#srh_data_report.obshgraf.load_all_data" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Загружает все JSON файлы из папки.
+Возвращает словарь {date: data}</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="srh_data_report.obshgraf.plot_all_gratings">
+<span class="sig-prename descclassname"><span class="pre">srh_data_report.obshgraf.</span></span><span class="sig-name descname"><span class="pre">plot_all_gratings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#srh_data_report.obshgraf.plot_all_gratings" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Строит графики для всех трех решеток.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="srh_data_report.obshgraf.plot_grating_timeline">
+<span class="sig-prename descclassname"><span class="pre">srh_data_report.obshgraf.</span></span><span class="sig-name descname"><span class="pre">plot_grating_timeline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">all_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grating</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#srh_data_report.obshgraf.plot_grating_timeline" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Строит график статусов для конкретной решетки по всем дням.</p>
+</dd></dl>
+
+</section>
+<section id="module-srh_data_report.report">
+<span id="srh-data-report-report-module"></span><h2>srh_data_report.report module<a class="headerlink" href="#module-srh_data_report.report" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Модуль с объектом результата проверки.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="srh_data_report.report.CheckReport">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">srh_data_report.report.</span></span><span class="sig-name descname"><span class="pre">CheckReport</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">check_date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raw_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#srh_data_report.report.CheckReport" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Единый объект результата проверки дня.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="srh_data_report.report.CheckReport.summary">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">summary</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#srh_data_report.report.CheckReport.summary" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="srh_data_report.report.CheckReport.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#srh_data_report.report.CheckReport.to_dict" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="srh_data_report.report.CheckReport.to_html">
+<span class="sig-name descname"><span class="pre">to_html</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#srh_data_report.report.CheckReport.to_html" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="srh_data_report.report.CheckReport.to_json">
+<span class="sig-name descname"><span class="pre">to_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#srh_data_report.report.CheckReport.to_json" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="srh_data_report.report.CheckReport.to_markdown">
+<span class="sig-name descname"><span class="pre">to_markdown</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#srh_data_report.report.CheckReport.to_markdown" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="srh_data_report.report.CheckReport.to_pdf">
+<span class="sig-name descname"><span class="pre">to_pdf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grating</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#srh_data_report.report.CheckReport.to_pdf" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-srh_data_report.srhcp">
+<span id="srh-data-report-srhcp-module"></span><h2>srh_data_report.srhcp module<a class="headerlink" href="#module-srh_data_report.srhcp" title="Ссылка на этот заголовок">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="srh_data_report.srhcp.SRHCorrPlot">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">srh_data_report.srhcp.</span></span><span class="sig-name descname"><span class="pre">SRHCorrPlot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">this_date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frequency</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'datasets/corrplot_cache'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#srh_data_report.srhcp.SRHCorrPlot" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="srh_data_report.srhcp.SRHCorrPlot.array_map">
+<span class="sig-name descname"><span class="pre">array_map</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'SRH0306':</span> <span class="pre">'0306',</span> <span class="pre">'SRH0612':</span> <span class="pre">'0612',</span> <span class="pre">'SRH1224':</span> <span class="pre">'1224'}</span></em><a class="headerlink" href="#srh_data_report.srhcp.SRHCorrPlot.array_map" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="srh_data_report.srhcp.SRHCorrPlot.base_url">
+<span class="sig-name descname"><span class="pre">base_url</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'https://ftp.rao.istp.ac.ru/SRH/corrPlot/'</span></em><a class="headerlink" href="#srh_data_report.srhcp.SRHCorrPlot.base_url" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="srh_data_report.srhcp.SRHCorrPlot.download_and_open_fits">
+<span class="sig-name descname"><span class="pre">download_and_open_fits</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#srh_data_report.srhcp.SRHCorrPlot.download_and_open_fits" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="srh_data_report.srhcp.SRHCorrPlot.overplot_to">
+<span class="sig-name descname"><span class="pre">overplot_to</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'I'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#srh_data_report.srhcp.SRHCorrPlot.overplot_to" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-srh_data_report.tabl">
+<span id="srh-data-report-tabl-module"></span><h2>srh_data_report.tabl module<a class="headerlink" href="#module-srh_data_report.tabl" title="Ссылка на этот заголовок">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="srh_data_report.tabl.extract_freq_band">
+<span class="sig-prename descclassname"><span class="pre">srh_data_report.tabl.</span></span><span class="sig-name descname"><span class="pre">extract_freq_band</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">h1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#srh_data_report.tabl.extract_freq_band" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Извлечение названия частотного диапазона</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="srh_data_report.tabl.parse_observation_log_v2">
+<span class="sig-prename descclassname"><span class="pre">srh_data_report.tabl.</span></span><span class="sig-name descname"><span class="pre">parse_observation_log_v2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#srh_data_report.tabl.parse_observation_log_v2" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Парсинг первого листа с учетом почасовых температур и погоды</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="srh_data_report.tabl.print_summary">
+<span class="sig-prename descclassname"><span class="pre">srh_data_report.tabl.</span></span><span class="sig-name descname"><span class="pre">print_summary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df_long</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#srh_data_report.tabl.print_summary" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Вывод статистики</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="srh_data_report.tabl.save_parsed_data">
+<span class="sig-prename descclassname"><span class="pre">srh_data_report.tabl.</span></span><span class="sig-name descname"><span class="pre">save_parsed_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df_long</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'parsed'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#srh_data_report.tabl.save_parsed_data" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Сохранение данных</p>
+</dd></dl>
+
+</section>
+<section id="module-srh_data_report">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-srh_data_report" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Пакет проверки данных СРХ.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="srh_data_report.check_day">
+<span class="sig-prename descclassname"><span class="pre">srh_data_report.</span></span><span class="sig-name descname"><span class="pre">check_day</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">check_date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_hour</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_hour</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">excel_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#srh_data_report.report.CheckReport" title="srh_data_report.report.CheckReport"><span class="pre">CheckReport</span></a></span></span><a class="headerlink" href="#srh_data_report.check_day" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Проверяет данные за один день.
+Если указан excel_path — добавляет journal_notes из журнала антенн.</p>
+</dd></dl>
+
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">srh-data-reports</a></h1>
+
+
+
+
+
+
+
+
+<h3>Навигация</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Быстрый поиск</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Искать" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2026, dansry2.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.2.3</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="_sources/srh_data_report.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

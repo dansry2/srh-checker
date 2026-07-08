@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+
+<html lang="ru" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>srh_data_report &#8212; документация srh-data-reports </title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=12dfc556" />
+    <script src="_static/documentation_options.js?v=372fde1a"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/translations.js?v=cd1d70c9"></script>
+    <link rel="index" title="Алфавитный указатель" href="genindex.html" />
+    <link rel="search" title="Поиск" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="srh-data-report">
+<h1>srh_data_report<a class="headerlink" href="#srh-data-report" title="Ссылка на этот заголовок">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="srh_data_report.html">srh_data_report package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="srh_data_report.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="srh_data_report.html#module-srh_data_report.Zhurnal_anten">srh_data_report.Zhurnal_anten module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="srh_data_report.html#srh_data_report.Zhurnal_anten.parse_antenna_journal"><code class="docutils literal notranslate"><span class="pre">parse_antenna_journal()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="srh_data_report.html#srh_data_report.Zhurnal_anten.update_files_with_journal"><code class="docutils literal notranslate"><span class="pre">update_files_with_journal()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="srh_data_report.html#module-srh_data_report.calendarq">srh_data_report.calendarq module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="srh_data_report.html#srh_data_report.calendarq.analyze_grating_status"><code class="docutils literal notranslate"><span class="pre">analyze_grating_status()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="srh_data_report.html#srh_data_report.calendarq.create_calendar_heatmap"><code class="docutils literal notranslate"><span class="pre">create_calendar_heatmap()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="srh_data_report.html#srh_data_report.calendarq.create_interactive_calendar"><code class="docutils literal notranslate"><span class="pre">create_interactive_calendar()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="srh_data_report.html#srh_data_report.calendarq.generate_day_pdf_matplotlib"><code class="docutils literal notranslate"><span class="pre">generate_day_pdf_matplotlib()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="srh_data_report.html#srh_data_report.calendarq.load_all_data"><code class="docutils literal notranslate"><span class="pre">load_all_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="srh_data_report.html#srh_data_report.calendarq.on_click"><code class="docutils literal notranslate"><span class="pre">on_click()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="srh_data_report.html#module-srh_data_report.checks">srh_data_report.checks module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="srh_data_report.html#srh_data_report.checks.AvailabilityChecker"><code class="docutils literal notranslate"><span class="pre">AvailabilityChecker</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="srh_data_report.html#srh_data_report.checks.AvailabilityChecker.check_day"><code class="docutils literal notranslate"><span class="pre">AvailabilityChecker.check_day()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="srh_data_report.html#srh_data_report.checks.CheckResult"><code class="docutils literal notranslate"><span class="pre">CheckResult</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="srh_data_report.html#srh_data_report.checks.CheckResult.checker_name"><code class="docutils literal notranslate"><span class="pre">CheckResult.checker_name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="srh_data_report.html#srh_data_report.checks.CheckResult.comment"><code class="docutils literal notranslate"><span class="pre">CheckResult.comment</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="srh_data_report.html#srh_data_report.checks.CheckResult.date"><code class="docutils literal notranslate"><span class="pre">CheckResult.date</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="srh_data_report.html#srh_data_report.checks.CheckResult.details"><code class="docutils literal notranslate"><span class="pre">CheckResult.details</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="srh_data_report.html#srh_data_report.checks.CheckResult.status"><code class="docutils literal notranslate"><span class="pre">CheckResult.status</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="srh_data_report.html#srh_data_report.checks.CheckResult.to_dict"><code class="docutils literal notranslate"><span class="pre">CheckResult.to_dict()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="srh_data_report.html#srh_data_report.checks.DataChecker"><code class="docutils literal notranslate"><span class="pre">DataChecker</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="srh_data_report.html#srh_data_report.checks.DataChecker.check_day"><code class="docutils literal notranslate"><span class="pre">DataChecker.check_day()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="srh_data_report.html#srh_data_report.checks.DataChecker.check_period"><code class="docutils literal notranslate"><span class="pre">DataChecker.check_period()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="srh_data_report.html#srh_data_report.checks.DataQualityManager"><code class="docutils literal notranslate"><span class="pre">DataQualityManager</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="srh_data_report.html#srh_data_report.checks.DataQualityManager.add_checker"><code class="docutils literal notranslate"><span class="pre">DataQualityManager.add_checker()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="srh_data_report.html#srh_data_report.checks.DataQualityManager.check_period"><code class="docutils literal notranslate"><span class="pre">DataQualityManager.check_period()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="srh_data_report.html#srh_data_report.checks.DataQualityManager.get_summary_dataframe"><code class="docutils literal notranslate"><span class="pre">DataQualityManager.get_summary_dataframe()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="srh_data_report.html#srh_data_report.checks.DataQualityManager.save_to_files"><code class="docutils literal notranslate"><span class="pre">DataQualityManager.save_to_files()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="srh_data_report.html#srh_data_report.checks.DataStatus"><code class="docutils literal notranslate"><span class="pre">DataStatus</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="srh_data_report.html#srh_data_report.checks.DataStatus.BAD"><code class="docutils literal notranslate"><span class="pre">DataStatus.BAD</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="srh_data_report.html#srh_data_report.checks.DataStatus.GOOD"><code class="docutils literal notranslate"><span class="pre">DataStatus.GOOD</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="srh_data_report.html#srh_data_report.checks.DataStatus.NOT_CHECKED"><code class="docutils literal notranslate"><span class="pre">DataStatus.NOT_CHECKED</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="srh_data_report.html#srh_data_report.checks.DataStatus.NO_DATA"><code class="docutils literal notranslate"><span class="pre">DataStatus.NO_DATA</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="srh_data_report.html#srh_data_report.checks.DataStatus.PROBLEM"><code class="docutils literal notranslate"><span class="pre">DataStatus.PROBLEM</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="srh_data_report.html#srh_data_report.checks.QualityChecker"><code class="docutils literal notranslate"><span class="pre">QualityChecker</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="srh_data_report.html#srh_data_report.checks.QualityChecker.check_day"><code class="docutils literal notranslate"><span class="pre">QualityChecker.check_day()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="srh_data_report.html#module-srh_data_report.cli">srh_data_report.cli module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="srh_data_report.html#srh_data_report.cli.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="srh_data_report.html#module-srh_data_report.oboznach">srh_data_report.oboznach module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="srh_data_report.html#srh_data_report.oboznach.reorganize_csv"><code class="docutils literal notranslate"><span class="pre">reorganize_csv()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="srh_data_report.html#module-srh_data_report.obshgraf">srh_data_report.obshgraf module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="srh_data_report.html#srh_data_report.obshgraf.analyze_grating_status"><code class="docutils literal notranslate"><span class="pre">analyze_grating_status()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="srh_data_report.html#srh_data_report.obshgraf.create_summary_plot"><code class="docutils literal notranslate"><span class="pre">create_summary_plot()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="srh_data_report.html#srh_data_report.obshgraf.load_all_data"><code class="docutils literal notranslate"><span class="pre">load_all_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="srh_data_report.html#srh_data_report.obshgraf.plot_all_gratings"><code class="docutils literal notranslate"><span class="pre">plot_all_gratings()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="srh_data_report.html#srh_data_report.obshgraf.plot_grating_timeline"><code class="docutils literal notranslate"><span class="pre">plot_grating_timeline()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="srh_data_report.html#module-srh_data_report.report">srh_data_report.report module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="srh_data_report.html#srh_data_report.report.CheckReport"><code class="docutils literal notranslate"><span class="pre">CheckReport</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="srh_data_report.html#srh_data_report.report.CheckReport.summary"><code class="docutils literal notranslate"><span class="pre">CheckReport.summary</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="srh_data_report.html#srh_data_report.report.CheckReport.to_dict"><code class="docutils literal notranslate"><span class="pre">CheckReport.to_dict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="srh_data_report.html#srh_data_report.report.CheckReport.to_html"><code class="docutils literal notranslate"><span class="pre">CheckReport.to_html()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="srh_data_report.html#srh_data_report.report.CheckReport.to_json"><code class="docutils literal notranslate"><span class="pre">CheckReport.to_json()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="srh_data_report.html#srh_data_report.report.CheckReport.to_markdown"><code class="docutils literal notranslate"><span class="pre">CheckReport.to_markdown()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="srh_data_report.html#srh_data_report.report.CheckReport.to_pdf"><code class="docutils literal notranslate"><span class="pre">CheckReport.to_pdf()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="srh_data_report.html#module-srh_data_report.srhcp">srh_data_report.srhcp module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="srh_data_report.html#srh_data_report.srhcp.SRHCorrPlot"><code class="docutils literal notranslate"><span class="pre">SRHCorrPlot</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="srh_data_report.html#srh_data_report.srhcp.SRHCorrPlot.array_map"><code class="docutils literal notranslate"><span class="pre">SRHCorrPlot.array_map</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="srh_data_report.html#srh_data_report.srhcp.SRHCorrPlot.base_url"><code class="docutils literal notranslate"><span class="pre">SRHCorrPlot.base_url</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="srh_data_report.html#srh_data_report.srhcp.SRHCorrPlot.download_and_open_fits"><code class="docutils literal notranslate"><span class="pre">SRHCorrPlot.download_and_open_fits()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="srh_data_report.html#srh_data_report.srhcp.SRHCorrPlot.overplot_to"><code class="docutils literal notranslate"><span class="pre">SRHCorrPlot.overplot_to()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="srh_data_report.html#module-srh_data_report.tabl">srh_data_report.tabl module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="srh_data_report.html#srh_data_report.tabl.extract_freq_band"><code class="docutils literal notranslate"><span class="pre">extract_freq_band()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="srh_data_report.html#srh_data_report.tabl.parse_observation_log_v2"><code class="docutils literal notranslate"><span class="pre">parse_observation_log_v2()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="srh_data_report.html#srh_data_report.tabl.print_summary"><code class="docutils literal notranslate"><span class="pre">print_summary()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="srh_data_report.html#srh_data_report.tabl.save_parsed_data"><code class="docutils literal notranslate"><span class="pre">save_parsed_data()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="srh_data_report.html#module-srh_data_report">Module contents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="srh_data_report.html#srh_data_report.check_day"><code class="docutils literal notranslate"><span class="pre">check_day()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">srh-data-reports</a></h1>
+
+
+
+
+
+
+
+
+<h3>Навигация</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Быстрый поиск</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Искать" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2026, dansry2.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.2.3</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="_sources/modules.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
