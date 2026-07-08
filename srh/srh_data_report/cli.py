@@ -2,7 +2,7 @@
 """Интерфейс командной строки."""
 import argparse
 from datetime import date
-from my_package import check_day
+from srh_data_report import check_day
 
 
 def main():
