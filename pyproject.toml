@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "srh-data-report"
+version = "0.1.3"
+description = "package"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "MIT"}
+authors = [
+    {name = "dansry2", email = "dansry2@mail.ru"}
+]
+keywords = ["radio", "astronomy", "SRH"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+dependencies = [
+    "pandas",
+    "numpy",
+    "scipy",
+    "astropy",
+]
+
+[project.scripts]
+srh-data-report = "srh_data_report.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/dansry2/srh-checker"
+Repository = "https://github.com/dansry2/srh_checker"
+
+[tool.setuptools]
+package-dir = {"" = "srh"}
+packages = {find = {where = ["srh"]}}

@@ -1,28 +1,9 @@
-# Файлы с данными
-*.csv
-*.xlsx
-*.xls
-
-# Папки с данными
-data/
-results/
+dist/
+*.egg-info/
 __pycache__/
-
-# Логи
-*.log
-
-# Временные файлы
-*.pyc
-*.pyo
-*.pyd
-*.so
-*.dll
-*.dylib
-
-# Настройки редакторов
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-.ipynb_checkpoints/
+report.*
+test_report.*
+*.ipynb
+proverka.py
+parsed_wide_reorganized.csv
+corrplot_cache/
