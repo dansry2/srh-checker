@@ -4,3 +4,4 @@ pdf_reports/
 quality_plots/
 __pycache__/
 *.xlsx
+.ipynb_checkpoints/
