@@ -1,0 +1,501 @@
+{
+  "date": "2024-05-10",
+  "SRH0306": {
+    "availability": true,
+    "time_range": "GOOD",
+    "flux": {
+      "2800": {
+        "state": "GOOD",
+        "comment": "OK",
+        "time_start": "01:00",
+        "time_range": "08:59",
+        "flux_I_median": 261.82135378006,
+        "flux_I_mean": 279.92145676749806,
+        "expected_sfu": 46.704475871378,
+        "sfu_ratio": 5.605915683565406
+      },
+      "3000": {
+        "state": "GOOD",
+        "comment": "OK",
+        "time_start": "01:00",
+        "time_range": "08:59",
+        "flux_I_median": 257.6582812008472,
+        "flux_I_mean": 273.4917864840672,
+        "expected_sfu": 49.64129382649382,
+        "sfu_ratio": 5.190402210333479
+      },
+      "3200": {
+        "state": "GOOD",
+        "comment": "OK",
+        "time_start": "01:00",
+        "time_range": "08:59",
+        "flux_I_median": 295.2975702750351,
+        "flux_I_mean": 312.9779632303691,
+        "expected_sfu": 52.726610096052696,
+        "sfu_ratio": 5.600541543199687
+      },
+      "3400": {
+        "state": "GOOD",
+        "comment": "OK",
+        "time_start": "01:00",
+        "time_range": "08:59",
+        "flux_I_median": 251.13121860485245,
+        "flux_I_mean": 267.02177962702183,
+        "expected_sfu": 55.962182788440145,
+        "sfu_ratio": 4.487516499387287
+      },
+      "3600": {
+        "state": "GOOD",
+        "comment": "OK",
+        "time_start": "01:00",
+        "time_range": "08:59",
+        "flux_I_median": 269.2742725653403,
+        "flux_I_mean": 284.06913217398414,
+        "expected_sfu": 59.349393023587744,
+        "sfu_ratio": 4.5371023838157925
+      },
+      "3800": {
+        "state": "GOOD",
+        "comment": "OK",
+        "time_start": "01:00",
+        "time_range": "08:59",
+        "flux_I_median": 285.64597896814473,
+        "flux_I_mean": 302.388335972437,
+        "expected_sfu": 62.889322913380376,
+        "sfu_ratio": 4.5420425238410465
+      },
+      "4000": {
+        "state": "GOOD",
+        "comment": "OK",
+        "time_start": "01:00",
+        "time_range": "08:59",
+        "flux_I_median": 291.0237369732764,
+        "flux_I_mean": 308.39625829479155,
+        "expected_sfu": 66.58281421364923,
+        "sfu_ratio": 4.3708536566124545
+      },
+      "4200": {
+        "state": "GOOD",
+        "comment": "OK",
+        "time_start": "01:00",
+        "time_range": "08:59",
+        "flux_I_median": 307.2046452640707,
+        "flux_I_mean": 323.88733053775354,
+        "expected_sfu": 70.43051315369091,
+        "sfu_ratio": 4.361811827122427
+      },
+      "4400": {
+        "state": "GOOD",
+        "comment": "OK",
+        "time_start": "01:00",
+        "time_range": "08:59",
+        "flux_I_median": 311.6914520134969,
+        "flux_I_mean": 329.1649932710174,
+        "expected_sfu": 74.43290519610152,
+        "sfu_ratio": 4.187549192018129
+      },
+      "4600": {
+        "state": "GOOD",
+        "comment": "OK",
+        "time_start": "01:00",
+        "time_range": "08:59",
+        "flux_I_median": 320.98241553627435,
+        "flux_I_mean": 339.116859198156,
+        "expected_sfu": 78.59034233835803,
+        "sfu_ratio": 4.084247580374907
+      },
+      "4800": {
+        "state": "GOOD",
+        "comment": "OK",
+        "time_start": "01:00",
+        "time_range": "08:59",
+        "flux_I_median": 354.71028334638424,
+        "flux_I_mean": 374.42167006736895,
+        "expected_sfu": 82.90306480741852,
+        "sfu_ratio": 4.278614839757327
+      },
+      "5000": {
+        "state": "GOOD",
+        "comment": "OK",
+        "time_start": "01:00",
+        "time_range": "08:59",
+        "flux_I_median": 354.2744793242612,
+        "flux_I_mean": 374.51552361523414,
+        "expected_sfu": 87.3712184818925,
+        "sfu_ratio": 4.054819029423103
+      },
+      "5200": {
+        "state": "GOOD",
+        "comment": "OK",
+        "time_start": "01:00",
+        "time_range": "08:59",
+        "flux_I_median": 377.5976258759512,
+        "flux_I_mean": 398.844808701482,
+        "expected_sfu": 91.99486901854421,
+        "sfu_ratio": 4.104550937507565
+      },
+      "5400": {
+        "state": "GOOD",
+        "comment": "OK",
+        "time_start": "01:00",
+        "time_range": "08:59",
+        "flux_I_median": 376.8013376022918,
+        "flux_I_mean": 398.09978708399444,
+        "expected_sfu": 96.77401340797735,
+        "sfu_ratio": 3.893621069674796
+      },
+      "5600": {
+        "state": "GOOD",
+        "comment": "OK",
+        "time_start": "01:00",
+        "time_range": "08:59",
+        "flux_I_median": 371.76088889230346,
+        "flux_I_mean": 395.8210504905083,
+        "expected_sfu": 101.70858950424386,
+        "sfu_ratio": 3.655157255688729
+      },
+      "5800": {
+        "state": "GOOD",
+        "comment": "OK",
+        "time_start": "01:00",
+        "time_range": "08:59",
+        "flux_I_median": 424.7095214518189,
+        "flux_I_mean": 449.2480598245507,
+        "expected_sfu": 106.79848394254367,
+        "sfu_ratio": 3.9767373634283762
+      }
+    }
+  },
+  "SRH0612": {
+    "availability": true,
+    "time_range": "GOOD",
+    "flux": {
+      "6000": {
+        "state": "GOOD",
+        "comment": "OK",
+        "time_start": "01:00",
+        "time_range": "08:59",
+        "flux_I_median": 327.0067385109264,
+        "flux_I_mean": 341.1347731152298,
+        "expected_sfu": 112.04353876329021,
+        "sfu_ratio": 2.918568461156695
+      },
+      "6400": {
+        "state": "GOOD",
+        "comment": "OK",
+        "time_start": "01:00",
+        "time_range": "08:59",
+        "flux_I_median": 416.7670661800838,
+        "flux_I_mean": 433.0532923228823,
+        "expected_sfu": 122.9983073513674,
+        "sfu_ratio": 3.3883967605303025
+      },
+      "6800": {
+        "state": "GOOD",
+        "comment": "OK",
+        "time_start": "01:00",
+        "time_range": "08:59",
+        "flux_I_median": 402.6661581289017,
+        "flux_I_mean": 418.57065902185207,
+        "expected_sfu": 134.57093150178792,
+        "sfu_ratio": 2.9922224185804334
+      },
+      "7200": {
+        "state": "GOOD",
+        "comment": "OK",
+        "time_start": "01:00",
+        "time_range": "08:59",
+        "flux_I_median": 393.1668804987448,
+        "flux_I_mean": 408.61544655115927,
+        "expected_sfu": 146.75901440184754,
+        "sfu_ratio": 2.6789964630192777
+      },
+      "7600": {
+        "state": "GOOD",
+        "comment": "OK",
+        "time_start": "01:00",
+        "time_range": "08:59",
+        "flux_I_median": 407.51046233962563,
+        "flux_I_mean": 423.33318303452296,
+        "expected_sfu": 159.55981576879057,
+        "sfu_ratio": 2.553966738907037
+      },
+      "8000": {
+        "state": "GOOD",
+        "comment": "OK",
+        "time_start": "01:00",
+        "time_range": "08:59",
+        "flux_I_median": 458.5741054107917,
+        "flux_I_mean": 474.3329558782021,
+        "expected_sfu": 172.9703192232578,
+        "sfu_ratio": 2.6511722211652784
+      },
+      "8400": {
+        "state": "GOOD",
+        "comment": "OK",
+        "time_start": "01:00",
+        "time_range": "08:59",
+        "flux_I_median": 453.33202915460294,
+        "flux_I_mean": 469.07752407769715,
+        "expected_sfu": 186.9872837848815,
+        "sfu_ratio": 2.4244003120347815
+      },
+      "8800": {
+        "state": "GOOD",
+        "comment": "OK",
+        "time_start": "01:00",
+        "time_range": "08:59",
+        "flux_I_median": 480.7278145691693,
+        "flux_I_mean": 498.07556393816117,
+        "expected_sfu": 201.6072838008495,
+        "sfu_ratio": 2.3844764212191807
+      },
+      "9200": {
+        "state": "GOOD",
+        "comment": "OK",
+        "time_start": "01:00",
+        "time_range": "08:59",
+        "flux_I_median": 533.1807308146037,
+        "flux_I_mean": 553.7040840027504,
+        "expected_sfu": 216.82674030718667,
+        "sfu_ratio": 2.459017416667457
+      },
+      "9600": {
+        "state": "GOOD",
+        "comment": "OK",
+        "time_start": "01:00",
+        "time_range": "08:59",
+        "flux_I_median": 523.5061069714875,
+        "flux_I_mean": 542.1501988840929,
+        "expected_sfu": 232.641945949307,
+        "sfu_ratio": 2.2502653372988903
+      },
+      "10000": {
+        "state": "GOOD",
+        "comment": "OK",
+        "time_start": "01:00",
+        "time_range": "08:59",
+        "flux_I_median": 569.9877832474132,
+        "flux_I_mean": 587.4361254596356,
+        "expected_sfu": 249.04908499483133,
+        "sfu_ratio": 2.2886564038540533
+      },
+      "10400": {
+        "state": "GOOD",
+        "comment": "OK",
+        "time_start": "01:00",
+        "time_range": "08:59",
+        "flux_I_median": 547.2812444614017,
+        "flux_I_mean": 565.1559471404311,
+        "expected_sfu": 266.0442495606791,
+        "sfu_ratio": 2.057106084289104
+      },
+      "10800": {
+        "state": "GOOD",
+        "comment": "OK",
+        "time_start": "01:00",
+        "time_range": "08:59",
+        "flux_I_median": 604.7076613126326,
+        "flux_I_mean": 621.7801945352052,
+        "expected_sfu": 283.623452887064,
+        "sfu_ratio": 2.13207918864672
+      },
+      "11200": {
+        "state": "GOOD",
+        "comment": "OK",
+        "time_start": "01:00",
+        "time_range": "08:59",
+        "flux_I_median": 574.0686981182528,
+        "flux_I_mean": 590.3977806906116,
+        "expected_sfu": 301.7826402841398,
+        "sfu_ratio": 1.9022588495406672
+      },
+      "11600": {
+        "state": "GOOD",
+        "comment": "OK",
+        "time_start": "01:00",
+        "time_range": "08:59",
+        "flux_I_median": 567.4087068181419,
+        "flux_I_mean": 582.8236151270991,
+        "expected_sfu": 320.51769822704966,
+        "sfu_ratio": 1.7702882241972129
+      },
+      "12000": {
+        "state": "GOOD",
+        "comment": "OK",
+        "time_start": "01:00",
+        "time_range": "08:59",
+        "flux_I_median": 585.214708930692,
+        "flux_I_mean": 600.4629063773677,
+        "expected_sfu": 339.8244619649783,
+        "sfu_ratio": 1.7221088368588464
+      }
+    }
+  },
+  "SRH1224": {
+    "availability": true,
+    "time_range": "GOOD",
+    "flux": {
+      "12200": {
+        "state": "GOOD",
+        "comment": "OK",
+        "time_start": "01:00",
+        "time_range": "08:59",
+        "flux_I_median": 1189.3770626070968,
+        "flux_I_mean": 1203.1026262333348,
+        "expected_sfu": 349.6909196129446,
+        "sfu_ratio": 3.4012237547476465
+      },
+      "12960": {
+        "state": "GOOD",
+        "comment": "OK",
+        "time_start": "01:00",
+        "time_range": "08:59",
+        "flux_I_median": 921.2650781526169,
+        "flux_I_mean": 935.589536033452,
+        "expected_sfu": 388.4679827956901,
+        "sfu_ratio": 2.3715341262426377
+      },
+      "13720": {
+        "state": "GOOD",
+        "comment": "OK",
+        "time_start": "01:00",
+        "time_range": "08:59",
+        "flux_I_median": 1075.800828335027,
+        "flux_I_mean": 1092.9307004443403,
+        "expected_sfu": 429.25666366849777,
+        "sfu_ratio": 2.5061948232580873
+      },
+      "14480": {
+        "state": "GOOD",
+        "comment": "OK",
+        "time_start": "01:00",
+        "time_range": "08:59",
+        "flux_I_median": 1024.3998781904402,
+        "flux_I_mean": 1032.7524093224174,
+        "expected_sfu": 472.02721435997745,
+        "sfu_ratio": 2.1702135957974917
+      },
+      "15240": {
+        "state": "GOOD",
+        "comment": "OK",
+        "time_start": "01:00",
+        "time_range": "08:59",
+        "flux_I_median": 1018.8572748868173,
+        "flux_I_mean": 1030.4753934654361,
+        "expected_sfu": 516.7495765646582,
+        "sfu_ratio": 1.971665427691614
+      },
+      "16000": {
+        "state": "GOOD",
+        "comment": "OK",
+        "time_start": "01:00",
+        "time_range": "08:59",
+        "flux_I_median": 1488.5615235158357,
+        "flux_I_mean": 1492.1382374391312,
+        "expected_sfu": 563.3934392935707,
+        "sfu_ratio": 2.6421349978486033
+      },
+      "16760": {
+        "state": "GOOD",
+        "comment": "OK",
+        "time_start": "01:00",
+        "time_range": "08:59",
+        "flux_I_median": 1216.6622344286543,
+        "flux_I_mean": 1220.1329024483982,
+        "expected_sfu": 611.9282836847142,
+        "sfu_ratio": 1.9882431763123392
+      },
+      "17520": {
+        "state": "GOOD",
+        "comment": "OK",
+        "time_start": "01:00",
+        "time_range": "08:59",
+        "flux_I_median": 1573.7133565161387,
+        "flux_I_mean": 1570.9176759787397,
+        "expected_sfu": 662.3234182213549,
+        "sfu_ratio": 2.3760496959963877
+      },
+      "18280": {
+        "state": "GOOD",
+        "comment": "OK",
+        "time_start": "01:00",
+        "time_range": "08:59",
+        "flux_I_median": 1947.0662030652115,
+        "flux_I_mean": 1937.6437125234886,
+        "expected_sfu": 714.5480067337464,
+        "sfu_ratio": 2.724892078231944
+      },
+      "19040": {
+        "state": "GOOD",
+        "comment": "OK",
+        "time_start": "01:00",
+        "time_range": "08:59",
+        "flux_I_median": 1896.750237519144,
+        "flux_I_mean": 1888.173136544803,
+        "expected_sfu": 768.5710908982192,
+        "sfu_ratio": 2.467891727884842
+      },
+      "19800": {
+        "state": "GOOD",
+        "comment": "OK",
+        "time_start": "01:00",
+        "time_range": "08:59",
+        "flux_I_median": 1821.6802707729485,
+        "flux_I_mean": 1808.804376035824,
+        "expected_sfu": 824.3616084890471,
+        "sfu_ratio": 2.2098072642075888
+      },
+      "20560": {
+        "state": "GOOD",
+        "comment": "OK",
+        "time_start": "01:00",
+        "time_range": "08:59",
+        "flux_I_median": 1878.0417078565865,
+        "flux_I_mean": 1866.7446729284707,
+        "expected_sfu": 881.8884083153656,
+        "sfu_ratio": 2.1295684240187835
+      },
+      "21320": {
+        "state": "GOOD",
+        "comment": "OK",
+        "time_start": "01:00",
+        "time_range": "08:59",
+        "flux_I_median": 2166.4147624466764,
+        "flux_I_mean": 2160.197843060411,
+        "expected_sfu": 941.1202625441973,
+        "sfu_ratio": 2.3019531601519803
+      },
+      "22080": {
+        "state": "GOOD",
+        "comment": "OK",
+        "time_start": "01:00",
+        "time_range": "08:59",
+        "flux_I_median": 2568.8613915274386,
+        "flux_I_mean": 2564.0975686906318,
+        "expected_sfu": 1002.0258769429425,
+        "sfu_ratio": 2.563667716211799
+      },
+      "23000": {
+        "state": "GOOD",
+        "comment": "OK",
+        "time_start": "01:00",
+        "time_range": "08:59",
+        "flux_I_median": 2142.563233408578,
+        "flux_I_mean": 2139.281049322409,
+        "expected_sfu": 1077.9482385360125,
+        "sfu_ratio": 1.9876309054676362
+      },
+      "23400": {
+        "state": "GOOD",
+        "comment": "OK",
+        "time_start": "01:00",
+        "time_range": "08:59",
+        "flux_I_median": 3455.826810958453,
+        "flux_I_mean": 3466.8682785944684,
+        "expected_sfu": 1111.694545428336,
+        "sfu_ratio": 3.108611826126144
+      }
+    }
+  }
+}

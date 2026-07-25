@@ -75,7 +75,8 @@ def analyze_grating_status(grating_data: dict) -> dict:
         "all_freqs": all_freqs_info,
         "total_freqs": len(flux_data),
         "availability": grating_data.get("availability", False),
-        "journal_notes": grating_data.get("journal_notes", {}).get("details", "")
+        "journal_notes": grating_data.get("journal_notes", {}).get("details", ""),
+        "range_broken": grating_data.get("range_broken", False)
     }
 
 
@@ -308,6 +309,11 @@ def generate_day_pdf_matplotlib(date: datetime.date, day_data: dict, grating: st
             y_pos -= 0.025
         
         y_pos -= 0.01
+        
+        if analysis.get("range_broken"):
+            ax.text(0.05, y_pos, '⚠ Диапазон сломан (range_broken = True)', fontsize=11, transform=ax.transAxes,
+                    color='red', fontweight='bold')
+            y_pos -= 0.04
         
         if analysis["journal_notes"]:
           

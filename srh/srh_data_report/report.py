@@ -87,6 +87,7 @@ class CheckReport:
                     "expected_sfu": info.get("expected_sfu", 0),
                     "sfu_ratio": info.get("sfu_ratio", 0),
                 }
+            entry["range_broken"] = data.get("range_broken", False)
             journal = data.get("journal_notes", {})
             if isinstance(journal, dict) and journal.get("details"):
                 entry["journal_notes"] = {"details": journal["details"]}
@@ -220,6 +221,8 @@ h2{{border-bottom:2px solid #eee;padding-bottom:5px}}</style></head>
                 y -= 0.03
                 for line in [
                     f"Status: {a['overall_status']}", f"Available: {'Yes' if a['availability'] else 'No'}",
+                    f"Range broken: {'Yes' if self.raw_data[gr].get('range_broken', False) else 'No'}",
+                    f"Range broken: {'Yes' if grating_data.get('range_broken', False) else 'No'}",
                     f"Time Range: {a['time_range']}", f"Frequencies: {a['total_freqs']}",
                     f"GOOD: {a['status_counts'].get('GOOD',0)} | PROBLEM: {a['status_counts'].get('PROBLEM',0)} | BAD: {a['status_counts'].get('BAD',0)}"
                 ]:

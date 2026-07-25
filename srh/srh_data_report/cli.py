@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-"""Интерфейс командной строки."""
 import argparse
+import os
 from datetime import date
 from srh_data_report import check_day
 
@@ -14,18 +14,22 @@ def main():
     parser.add_argument("--to-html", help="Сохранить в HTML файл")
     parser.add_argument("--to-md", help="Сохранить в Markdown файл")
     parser.add_argument("--to-pdf", help="Сохранить в PDF файл")
-    parser.add_argument("--journal", help="Путь к Excel файлу журнала антенн")
-    
+    parser.add_argument(
+        "--api-url",
+        help="URL API журнала наблюдений (по умолчанию SRH_API_URL из окружения или http://localhost:8000)",
+        default=os.environ.get("SRH_API_URL", "http://localhost:8000")
+    )
+
     args = parser.parse_args()
-    
+
     try:
         dt = date.fromisoformat(args.check_date)
     except ValueError:
         print(f"Ошибка: неверный формат даты '{args.check_date}'. Используйте YYYY-MM-DD")
         return
-    
-    result = check_day(dt, excel_path=args.journal)
-    
+
+    result = check_day(dt, api_url=args.api_url)
+
     if args.to_json:
         result.to_json(args.to_json)
     elif args.to_html:

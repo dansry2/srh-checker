@@ -572,20 +572,12 @@ if __name__ == "__main__":
         anomaly_duration_minutes=40    
     ))
     
-    start = datetime.date(2024, 5, 9)
-    end = datetime.date(2024, 5, 12)
+    start = datetime.date(2024, 5, 1)
+    end = datetime.date(2024, 5, 30)
     
     manager.check_period(start, end)
     
     manager.save_to_files()
-
-    try:
-        from srh_data_report.fetch_api import update_files_with_api
-        import os
-        api_url = os.environ.get("SRH_API_URL", "http://localhost:8000")
-        update_files_with_api(manager.output_dir, start_date=start, end_date=end, api_url=api_url)
-    except Exception as e:
-        print(f"API журнала не доступен: {e}")
     
     print("\n" + "="*70)
     print("СВОДНАЯ ТАБЛИЦА")
