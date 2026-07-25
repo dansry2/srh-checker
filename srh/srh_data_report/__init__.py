@@ -5,7 +5,7 @@ from .report import CheckReport
 from .checks import AvailabilityChecker, QualityChecker, DataQualityManager
 from .fetch_api import fetch_antenna_journal
 
-__version__ = "0.1.2"
+__version__ = "0.2.3"
 
 
 def check_day(check_date: date, start_hour: int = 0, end_hour: int = 10,
