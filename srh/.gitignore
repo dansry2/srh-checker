@@ -5,3 +5,4 @@ quality_plots/
 __pycache__/
 *.xlsx
 .ipynb_checkpoints/
+docs/_build/
