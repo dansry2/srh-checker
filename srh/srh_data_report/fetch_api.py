@@ -49,7 +49,7 @@ def fetch_antenna_journal(
     for day_entry in data:
         entry_date = datetime.fromisoformat(day_entry["date"]).date()
         grid_id = day_entry.get("grid_id")
-        is_broken_range = day_entry.get("is_broken", False)
+        is_ok_range = day_entry.get("is_ok", True)
 
         grating = GRID_TO_GRATING.get(grid_id)
         if grating is None:
@@ -59,21 +59,21 @@ def fetch_antenna_journal(
         for antenna_entry in day_entry.get("entries", []):
             antenna = antenna_entry.get("antenna", "?")
             error = antenna_entry.get("error", "")
-            is_broken = antenna_entry.get("is_broken", False)
+            is_ok = antenna_entry.get("is_ok", True)
             
-            status = "BROKEN" if is_broken else "OK"
+            status = "OK" if is_ok else "BROKEN"
             antennas.append({
                 "antenna": antenna,
                 "status": status,
-                "is_broken": is_broken,
+                "is_ok": is_ok,
                 "error": error
             })
 
         journal_data[entry_date][grating] = {
-            "is_broken_range": is_broken_range,
+            "is_ok_range": is_ok_range,
             "antennas": antennas,
             "details": "; ".join(
-                f"[{'X' if a['is_broken'] else 'OK'}] {a['antenna']}{': ' + a['error'] if a['error'] else ''}"
+                f"[{'OK' if a['is_ok'] else 'X'}] {a['antenna']}{': ' + a['error'] if a['error'] else ''}"
                 for a in antennas
             )
         }
