@@ -135,7 +135,7 @@ def update_files_with_api(
         if date_obj in journal_data:
             for grating, jdata in journal_data[date_obj].items():
                 if grating in day_data:
-                    day_data[grating]["range_broken"] = jdata["is_broken_range"]
+                    day_data[grating]["range_broken"] = jdata.get("is_ok_range", True)
                     day_data[grating]["journal_notes"] = {
                         "details": jdata["details"],
                         "antennas": jdata["antennas"]
