@@ -61,19 +61,39 @@ def fetch_antenna_journal(
             error = antenna_entry.get("error", "")
             is_ok = antenna_entry.get("is_ok", True)
             
+            broken_since = antenna_entry.get("broken_since")
+            broken_until = antenna_entry.get("broken_until")
+            start_time = antenna_entry.get("start_time")
+            end_time = antenna_entry.get("end_time")
+
             status = "OK" if is_ok else "BROKEN"
+
+            # Формируем отображение статуса
+            if is_ok:
+                display_status = "OK"
+            elif not end_time:
+                display_status = f"Сломана с {broken_since} {start_time or ''}"
+            else:
+                display_status = f"Сломана с {broken_since} {start_time or ''} до {broken_until} {end_time or ''}"
+
             antennas.append({
                 "antenna": antenna,
                 "status": status,
                 "is_ok": is_ok,
-                "error": error
+                "error": error,
+                "broken_since": broken_since,
+                "broken_until": broken_until,
+                "start_time": start_time,
+                "end_time": end_time,
+                "display_status": display_status
             })
 
         journal_data[entry_date][grating] = {
             "is_ok_range": is_ok_range,
             "antennas": antennas,
             "details": "; ".join(
-                f"[{'OK' if a['is_ok'] else 'X'}] {a['antenna']}{': ' + a['error'] if a['error'] else ''}"
+                f"{a['display_status']} [{a['antenna']}]"
+                + (f": {a['error']}" if a['error'] else "")
                 for a in antennas
             )
         }
