@@ -55,7 +55,7 @@ def fetch_antenna_journal(
         if grating is None:
             continue
 
-        antennas = []
+        antennas = {}
         for antenna_entry in day_entry.get("entries", []):
             antenna = antenna_entry.get("antenna", "?")
             error = antenna_entry.get("error", "")
@@ -66,18 +66,18 @@ def fetch_antenna_journal(
             start_time = antenna_entry.get("start_time")
             end_time = antenna_entry.get("end_time")
 
-            status = "OK" if is_ok else "BROKEN"
+            status = "BROKEN" if end_time or not is_ok else "OK"
 
             # Формируем отображение статуса
-            if is_ok:
-                display_status = "OK"
-            elif not end_time:
-                display_status = f"Сломана с {broken_since} {start_time or ''}"
-            else:
+            # Если есть end_time — значит в этот день была поломка и починка
+            if end_time:
                 display_status = f"Сломана с {broken_since} {start_time or ''} до {broken_until} {end_time or ''}"
+            elif not is_ok:
+                display_status = f"Сломана с {broken_since} {start_time or ''} (ещё сломана)"
+            else:
+                display_status = "OK"
 
-            antennas.append({
-                "antenna": antenna,
+            antennas[antenna] = {
                 "status": status,
                 "is_ok": is_ok,
                 "error": error,
@@ -86,15 +86,15 @@ def fetch_antenna_journal(
                 "start_time": start_time,
                 "end_time": end_time,
                 "display_status": display_status
-            })
+            }
 
         journal_data[entry_date][grating] = {
             "is_ok_range": is_ok_range,
             "antennas": antennas,
             "details": "; ".join(
-                f"{a['display_status']} [{a['antenna']}]"
+                f"[{code}] {a['display_status']}"
                 + (f": {a['error']}" if a['error'] else "")
-                for a in antennas
+                for code, a in antennas.items()
             )
         }
 
@@ -135,7 +135,7 @@ def update_files_with_api(
         if date_obj in journal_data:
             for grating, jdata in journal_data[date_obj].items():
                 if grating in day_data:
-                    day_data[grating]["range_broken"] = jdata.get("is_ok_range", True)
+                    day_data[grating]["range_broken"] = not jdata.get("is_ok_range", True)
                     day_data[grating]["journal_notes"] = {
                         "details": jdata["details"],
                         "antennas": jdata["antennas"]
