@@ -45,7 +45,7 @@ def check_day(check_date: date, start_hour: int = 0, end_hour: int = 10,
         if check_date in journal_data:
             for grating, jdata in journal_data[check_date].items():
                 if grating in raw_data:
-                    raw_data[grating]["range_broken"] = jdata["is_broken_range"]
+                    raw_data[grating]["range_broken"] = not jdata.get("is_ok_range", True)
                     raw_data[grating]["journal_notes"] = {
                         "details": jdata["details"],
                         "antennas": jdata["antennas"]
